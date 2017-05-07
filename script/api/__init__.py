@@ -3,7 +3,7 @@ from script.models import database
 
 api = Blueprint('api', __name__)
 
-# from . import
+from . import rest
 
 
 '''

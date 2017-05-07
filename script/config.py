@@ -11,7 +11,7 @@ SECRET_KEY = 'AIzaSyAlpjgnmPOM99xvTK_KzGCvVWLMXC_MaA0'
 SESSION_TIMEOUT = 60 * 60
 
 # Use google cloud or not
-USE_GCLOUD = True
+USE_GCLOUD = False
 
 if USE_GCLOUD:
     # Google Cloud Project ID.
@@ -27,7 +27,7 @@ if USE_GCLOUD:
     CLOUDSQL_USER = 'root'
     CLOUDSQL_PASSWORD = '1qaz2wsx'
     CLOUDSQL_DATABASE = 'proj_db'
-    CLOUDSQL_CONNECTION_NAME = 'opendata-cw2-166700:proj-db'
+    CLOUDSQL_CONNECTION_NAME = 'opendata-cw2-166700:us-central1:projdb'
 
     # Google Cloud database uri
     SQLALCHEMY_DATABASE_URI = (

@@ -1,6 +1,6 @@
 #!/bin/env python
 from script import create_app
-from script.models import database
+from script.models.database import db_session
 from script.config import USE_GCLOUD, DEBUG
 
 app = create_app()
@@ -13,12 +13,12 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
-    database.close_session()
+    db_session.remove()
 
 
 if not USE_GCLOUD and __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000, debug=DEBUG)
+    app.run(debug=DEBUG)
 
-    # start the application
-    # cd /path/to/opendata_coursework2
-    # gunicorn app:app
+# start the application
+# cd /path/to/opendata_coursework2
+# gunicorn app:app

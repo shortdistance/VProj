@@ -16,19 +16,6 @@ BaseModel = declarative_base()
 BaseModel.query = db_session.query_property()
 
 
-def get_session():
-    """
-    get db session
-    """
-    return db_session
-
-def close_session():
-    """
-    close db session
-    """
-    db_session.remove()
-
-
 def pager(query, order_by, page_no, page_size=PAGESIZE):
     """
     data page

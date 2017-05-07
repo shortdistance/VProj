@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from flask import Flask
-from flask_mail import Mail
+#from flask_mail import Mail
 from script.config import SECRET_KEY, DEBUG
 
-mail = Mail()
+#mail = Mail()
 
 
 def create_app():
@@ -17,7 +17,7 @@ def create_app():
     app.config['SECRET_KEY'] = SECRET_KEY
 
     # init app by mail
-    mail.init_app(app)
+    #mail.init_app(app)
 
     # config jinja
     # app.jinja_env.variable_start_string = '(('
@@ -25,8 +25,8 @@ def create_app():
     app.jinja_env.trim_blocks = True
 
     # start register module
-    from controllers import main as main_blueprint
-    from api import api as api_blueprint
+    from script.controllers import main as main_blueprint
+    from script.api import api as api_blueprint
     app.register_blueprint(main_blueprint)
     app.register_blueprint(api_blueprint, url_prefix='/api')
     # end register module
