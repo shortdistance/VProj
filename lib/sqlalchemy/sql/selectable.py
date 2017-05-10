@@ -1260,7 +1260,7 @@ class Alias(FromClause):
         try:
             return self.element.as_scalar()
         except AttributeError:
-            raise AttributeError("Element %s does not support "
+            raise AttributeError("elementui %s does not support "
                                  "'as_scalar()'" % self.element)
 
     def is_derived_from(self, fromclause):

@@ -33,7 +33,7 @@ def createDB():
 def import_region(region_file):
     with open(region_file) as fp:
         for line in fp:
-            line.replace('"', '')  # delete quotation in the line
+            line = line.replace('"', '')  # delete quotation in the line
             line = line.strip()  # delete all line break
             a = line.split(',')
             b = Region(a[0], a[1], a[2])
@@ -51,7 +51,7 @@ def import_region(region_file):
 def import_area(area_file):
     lines = open(area_file).readlines()
     for line in lines:
-        line.replace('"', '')
+        line = line.replace('"', '')
         line = line.strip()
         a = line.split(',')
         b = Area(a[0], a[1], a[2])
@@ -73,7 +73,7 @@ def import_area(area_file):
 def import_district(district_file):
     lines = open(district_file).readlines()
     for line in lines:
-        line.replace('"', '')
+        line = line.replace('"', '')
         line = line.strip()
         a = line.split(',')
         b = District(a[0], a[1], a[2],
@@ -96,7 +96,7 @@ def import_district(district_file):
 def import_district_year_hpp(district_year_hpp_file):
     lines = open(district_year_hpp_file).readlines()
     for line in lines:
-        line.replace('"', '')
+        line = line.replace('"', '')
         line = line.strip()
         a = line.split(',')
         b = DistrictYearHpp(a[0], a[1], a[2],
@@ -108,7 +108,7 @@ def import_district_year_hpp(district_year_hpp_file):
 def import_district_year_month_hpp(district_year_month_hpp_file):
     with open(district_year_month_hpp_file) as fp:
         for line in fp:
-            line.replace('"', '')
+            line = line.replace('"', '')
             line = line.strip()
             a = line.split(',')
             b = DistrictYearMonthHpp(a[0], a[1], a[2],
@@ -135,7 +135,7 @@ def import_district_year_month_hpp(district_year_month_hpp_file):
 def import_iphrp_index_value(iphrp_index_value_file):
     with open(iphrp_index_value_file) as fp:
         for line in fp:
-            line.replace('"', '')
+            line = line.replace('"', '')
             line = line.strip()
             a = line.split(',')
             b = IphrpIndexValue(a[0], a[1], a[2],
@@ -164,7 +164,7 @@ def import_iphrp_index_value(iphrp_index_value_file):
 def import_iphrp_annual_change(iphrp_annual_change_file):
     with open(iphrp_annual_change_file) as fp:
         for line in fp:
-            line.replace('"', '')
+            line = line.replace('"', '')
             line = line.strip()
             a = line.split(',')
             b = IphrpAnnualChange(a[0], a[1], a[2],

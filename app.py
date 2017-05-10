@@ -2,6 +2,7 @@
 from script import create_app
 from script.models.database import db_session
 from script.config import USE_GCLOUD, DEBUG
+import logging
 
 app = create_app()
 from werkzeug.contrib.fixers import ProxyFix
@@ -17,7 +18,9 @@ def shutdown_session(exception=None):
 
 
 if not USE_GCLOUD and __name__ == '__main__':
-    app.run(debug=DEBUG)
+    handler = logging.FileHandler('flask.log')
+    app.logger.addHandler(handler)
+    app.run(host='127.0.0.1', port=5001, debug=DEBUG)
 
 # start the application
 # cd /path/to/opendata_coursework2

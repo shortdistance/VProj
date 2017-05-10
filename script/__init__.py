@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from flask import Flask
-#from flask_mail import Mail
+from flask_mail import Mail
 from script.config import SECRET_KEY, DEBUG
 
-#mail = Mail()
+mail = Mail()
 
 
 def create_app():
@@ -11,13 +11,13 @@ def create_app():
     app.debug = DEBUG
 
     # load config file
-    # app.config.from_pyfile('config.py')
+    app.config.from_pyfile('config.py')
 
     # config secret key
     app.config['SECRET_KEY'] = SECRET_KEY
 
     # init app by mail
-    #mail.init_app(app)
+    mail.init_app(app)
 
     # config jinja
     # app.jinja_env.variable_start_string = '(('

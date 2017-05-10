@@ -103,7 +103,7 @@ class MarkdownInHtmlProcessor(BlockProcessor):
         self.parser.blockprocessors.tag_counter += 1
         tag = self._tag_data[self.parser.blockprocessors.tag_counter]
 
-        # Create Element
+        # Create elementui
         markdown_value = tag['attrs'].pop('markdown')
         element = util.etree.SubElement(parent, tag['tag'], tag['attrs'])
 

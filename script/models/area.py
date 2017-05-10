@@ -59,24 +59,39 @@ class Area(BaseModel):
         # get all the areas of a region according to a region abbrevation.
         # region_abbr: eg:'NE','L','E'
         # return: list
-        areas = []
+        area_list = []
         for region, area in db_session.query(Region, Area).filter(
                 and_(Region.RegionName == Area.RegionName, Region.RegionAbbr == region_addr)).all():
-            areas.append(area)
-        return areas
+            area_list.append(Area.area_to_json(area))
+        return area_list
 
     @staticmethod
     def get_area_by_code(area_code):
         # get a area according to a area code
         # area_code: area code, eg 'SO'
         # return: a object
-        return Area.query.filter_by(PostcodeAreaCode=area_code).first()
+        area = Area.query.filter_by(PostcodeAreaCode=area_code).first()
+        return Area.area_to_json(area)
 
     @staticmethod
     def get_all_areas():
         # get all area information
         # return: object list
-        return Area.query.all()
+        area_list = []
+        for area in Area.query.all():
+            area_list.append(Area.area_to_json(area))
+        return area_list
+
+    @staticmethod
+    def area_to_json(area):
+        ret_json = {}
+        if isinstance(area, Area):
+            ret_json = {
+                'PostcodeAreaCode': area.PostcodeAreaCode,
+                'PostcodeAreaName': area.PostcodeAreaName,
+                'RegionName': area.RegionName
+            }
+        return ret_json
 
 
 class District(BaseModel):
@@ -122,15 +137,27 @@ class District(BaseModel):
 
     @staticmethod
     def get_district(district):
-        return District.query.filter_by(PostcodeDistrict=district).first()
+        district = District.query.filter_by(PostcodeDistrict=district).first()
+        return District.distrinct_to_json(district)
 
     @staticmethod
     def get_districts_under_area(area_code):
-        return District.query.filter_by(PostcodeAreaCode=area_code).all()
+        ret_list = []
+
+        for district in District.query.filter_by(PostcodeAreaCode=area_code).all():
+            ret_json = District.distrinct_to_json(district)
+            if ret_json:
+                ret_list.append(ret_json)
+        return ret_list
 
     @staticmethod
     def get_all_districts():
-        return District.query.all()
+        ret_list = []
+        for district in District.query.all():
+            ret_json = District.distrinct_to_json(district)
+            if ret_json:
+                ret_list.append(ret_json)
+        return ret_list
 
     @staticmethod
     def get_all_cities_under_region(region_abbr):
@@ -144,8 +171,31 @@ class District(BaseModel):
     @staticmethod
     def get_all_districts_under_city(city_name):
         city_name = city_name.lower()
-        return db_session.query(District).filter(
-            and_(District.City.ilike('%' + city_name + '%'),
-                 District.ActivePostcodes > 0,
-                 District.Population > 0,
-                 District.Households > 0)).all()
+        ret_list = []
+        for district in db_session.query(District).filter(
+                and_(District.City.ilike('%' + city_name + '%'),
+                     District.ActivePostcodes > 0,
+                     District.Population > 0,
+                     District.Households > 0)).all():
+            ret_json = District.distrinct_to_json(district)
+            if ret_json:
+                ret_list.append(ret_json)
+        return ret_list
+
+    @staticmethod
+    def distrinct_to_json(district):
+        ret_json = {}
+        if isinstance(district, District):
+            ret_json = {
+                'PostcodeDistrict': district.PostcodeDistrict,
+                'PostcodeAreaCode': district.PostcodeAreaCode,
+                'Latitude': district.Latitude,
+                'Longitude': district.Longitude,
+                'City': district.City,
+                'Region': district.Region,
+                'Postcodes': district.Postcodes,
+                'ActivePostcodes': district.ActivePostcodes,
+                'Population': district.Population,
+                'Households': district.Households
+            }
+        return ret_json

@@ -2,6 +2,57 @@ from sqlalchemy import Column, Integer, String, Float
 from script.models.database import BaseModel, db_session
 
 
+class Hpp(BaseModel):
+    # The house paid price records from 2015
+    # Price: 231950
+    # Datetime: 2015/3/27 0:00
+    # Postcode: CF11 9EE
+    # PropertyType: S
+    # Old: N
+    # Duration: F
+    # PAON: 43
+    # SAON:
+    # Street: WYNDHAM CRESCENT
+    # Locality:
+    # City: CARDIFF
+    # District: CARDIFF
+    # County: CARDIFF
+    __tablename__ = 'Hpp'
+    Id = Column(Integer, primary_key=True, autoincrement=True)
+    Datetime = Column(String(64))
+    Postcode = Column(String(64))
+    PropertyType = Column(String(64))
+    Old = Column(String(64))
+    Duration = Column(String(64))
+    PAON = Column(String(64))
+    SAON = Column(String(255))
+    Street = Column(String(255))
+    Locality = Column(String(255))
+    City = Column(String(64))
+    District = Column(String(64))
+    County = Column(String(64))
+
+    def __init__(self, datatime, postcode, property_type, old, duration, paon, saon,
+                 street, locality, city, district, county):
+        self.Datetime = datatime
+        self.Postcode = postcode
+        self.PropertyType = property_type
+        self.Old = old
+        self.Duration = duration
+        self.PAON = paon
+        self.SAON = saon
+        self.Street = street
+        self.Locality = locality
+        self.City = city
+        self.District = district
+        self.County = county
+        db_session.add(self)
+        db_session.commit()
+
+    @staticmethod
+    def get_hpp_under_postcode():
+        return Hpp.query.filter_by()
+
 class DistrictYearHpp(BaseModel):
     # House paid price data
     # Postcode_district:AL1

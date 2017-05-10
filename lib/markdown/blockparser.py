@@ -54,7 +54,7 @@ class BlockParser:
         """ Parse a markdown document into an ElementTree.
 
         Given a list of lines, an ElementTree object (not just a parent
-        Element) is created and the root element is passed to the parser
+        elementui) is created and the root element is passed to the parser
         as the parent. The ElementTree object is returned.
 
         This should only be called on an entire document, not pieces.
@@ -73,7 +73,7 @@ class BlockParser:
         block. Generally, this method would be called by extensions when
         block parsing is required.
 
-        The ``parent`` etree Element passed in is altered in place.
+        The ``parent`` etree elementui passed in is altered in place.
         Nothing is returned.
 
         """

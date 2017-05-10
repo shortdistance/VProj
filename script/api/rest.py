@@ -1,10 +1,10 @@
 from flask import session, redirect, url_for, render_template, jsonify, request
 from . import api
 from script.models.area import Region, Area, District
-from script.models.database import db_session
+from script.services.area import location_search
 
-#area case 001
-@api.route('/area/get_all_regions', method=['GET'])
+# area case 001
+@api.route('/area/get_all_regions', methods=['GET'])
 def get_all_regions():
     """
     get all regions information
@@ -14,7 +14,7 @@ def get_all_regions():
 
 
 # api case 004
-@api.route('/area/get_areas_under_region', method=['POST'])
+@api.route('/area/get_areas_under_region', methods=['POST'])
 def get_areas_under_region():
     """
     get all areas under a region information
@@ -30,3 +30,10 @@ def get_areas_under_region():
         areas.append(ret_area)
     return jsonify(areas=areas)
 
+
+@api.route('/location/search', methods=['POST'])
+def location_search_ajax():
+
+    qry_str = request.json['location']
+    bexist,ptype,poutput = location_search(qry_str)
+    return jsonify(bexist=bexist, ptype=ptype, poutput=poutput)

@@ -110,7 +110,7 @@ class InlineProcessor(Treeprocessor):
 
     def __processElementText(self, node, subnode, isText=True):
         """
-        Process placeholders in Element.text or Element.tail
+        Process placeholders in elementui.text or elementui.tail
         of Elements popped from self.stashed_nodes.
 
         Keywords arguments:
@@ -147,7 +147,7 @@ class InlineProcessor(Treeprocessor):
         Keyword arguments:
 
         * data: string with placeholders instead of ElementTree elements.
-        * parent: Element, which contains processing inline data
+        * parent: elementui, which contains processing inline data
 
         Returns: list with ElementTree elements with applied inline patterns.
 
@@ -183,7 +183,7 @@ class InlineProcessor(Treeprocessor):
                         text = data[strartIndex:index]
                         linkText(text)
 
-                    if not isString(node):  # it's Element
+                    if not isString(node):  # it's elementui
                         for child in [node] + list(node):
                             if child.tail:
                                 if child.tail.strip():

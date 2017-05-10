@@ -234,7 +234,7 @@ class Pattern(object):
             return text
 
         def itertext(el):  # pragma: no cover
-            ' Reimplement Element.itertext for older python versions '
+            ' Reimplement elementui.itertext for older python versions '
             tag = el.tag
             if not isinstance(tag, util.string_type) and tag is not None:
                 return
@@ -253,7 +253,7 @@ class Pattern(object):
                 if isinstance(value, util.string_type):
                     return value
                 else:
-                    # An etree Element - return text content only
+                    # An etree elementui - return text content only
                     return ''.join(itertext(value))
         return util.INLINE_PLACEHOLDER_RE.sub(get_stash, text)
 
@@ -493,7 +493,7 @@ class ImageReferencePattern(ReferencePattern):
 
 
 class AutolinkPattern(Pattern):
-    """ Return a link Element given an autolink (`<http://example/com>`). """
+    """ Return a link elementui given an autolink (`<http://example/com>`). """
     def handleMatch(self, m):
         el = util.etree.Element("a")
         el.set('href', self.unescape(m.group(2)))
@@ -503,7 +503,7 @@ class AutolinkPattern(Pattern):
 
 class AutomailPattern(Pattern):
     """
-    Return a mailto link Element given an automail link (`<foo@example.com>`).
+    Return a mailto link elementui given an automail link (`<foo@example.com>`).
     """
     def handleMatch(self, m):
         el = util.etree.Element('a')

@@ -370,7 +370,7 @@ msgstr "Existiert bereits."
 #, python-format
 msgid "At least %(num)d item is required"
 msgid_plural "At least %(num)d items are required"
-msgstr[0] "Mindestens %(num)d Element ist erforderlich"
+msgstr[0] "Mindestens %(num)d elementui ist erforderlich"
 msgstr[1] "Mindestens %(num)d Elemente sind erforderlich"
 
 #: ../flask_admin/contrib/sqla/view.py:996

@@ -87,7 +87,7 @@ class FootnoteExtension(Extension):
         self.unique_prefix += 1
 
     def findFootnotesPlaceholder(self, root):
-        """ Return ElementTree Element that contains Footnote placeholder. """
+        """ Return ElementTree elementui that contains Footnote placeholder. """
         def finder(element):
             for child in element:
                 if child.text:
@@ -129,7 +129,7 @@ class FootnoteExtension(Extension):
             return 'fnref%s%s' % (self.get_separator(), id)
 
     def makeFootnotesDiv(self, root):
-        """ Return div of footnotes as et Element. """
+        """ Return div of footnotes as et elementui. """
 
         if not list(self.footnotes.keys()):
             return None
