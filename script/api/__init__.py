@@ -1,14 +1,14 @@
 from flask import Blueprint
-from script.models import database
+from script.models.database import db_session
 
 api = Blueprint('api', __name__)
 
 from . import rest
 
 
-'''
-@main.after_request
+
+@api.after_request
 def close_session_after_request(response):
-    database.close_session()
+    db_session.remove()
     return response
-'''
+

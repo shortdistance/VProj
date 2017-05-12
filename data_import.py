@@ -175,12 +175,14 @@ def import_iphrp_annual_change(iphrp_annual_change_file):
 
 
 if __name__ == '__main__':
-    #dropDB()
+    dropDB()
     createDB()
-    #import_region(REGION_FILE)
-    #import_area(AREA_FILE)
+    '''
+    import_region(REGION_FILE)
+    import_area(AREA_FILE)
     import_district(DISTRICT_FILE)
-    #import_district_year_hpp(DISTRICT_YEAR_HPP_FILE)
-    #import_district_year_month_hpp(DISTRICT_YEAR_MONTH_HPP_FILE)
-    #import_iphrp_index_value(IPHRP_INDEX_VALUE_FILE)
-    #import_iphrp_annual_change(IPHRP_ANNUAL_CHANGE_FILE)
+    import_district_year_hpp(DISTRICT_YEAR_HPP_FILE)
+    import_district_year_month_hpp(DISTRICT_YEAR_MONTH_HPP_FILE)
+    import_iphrp_index_value(IPHRP_INDEX_VALUE_FILE)
+    import_iphrp_annual_change(IPHRP_ANNUAL_CHANGE_FILE)
+    '''

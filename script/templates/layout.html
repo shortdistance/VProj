@@ -15,17 +15,74 @@
     <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
     <link rel="stylesheet" href="{{ url_for('static',filename='assets/css/amazeui.min.css') }}"/>
     <link rel="stylesheet" href="{{ url_for('static',filename='assets/css/admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/css/app.css') }}">
+
     {% block head %} {% endblock %}
 </head>
-
+<style>
+    .wrap {
+        height: 100%;
+        width: 100%;
+    }
+</style>
 {% block style %} {% endblock %}
-
-
 <body>
+<div class="wrap">
+    <header class="am-topbar am-topbar-inverse admin-header">
+        <div class="am-topbar-brand">
+            <a href="{{ url_for('main.hpp') }}" class="tpl-logo">
+                <img src="{{ url_for('static',filename='img/logo.png') }}" height="40px" width="40px" alt="">
+            </a>
+        </div>
 
-{% block body %} {% endblock %}
+        <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+            <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list tpl-header-list">
+                <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                    <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                        <span class="am-icon-bell-o"></span>House Price Map</span>
+                    </a>
+                </li>
+                <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                    <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                        <span class="am-icon-comment-o"></span> House Price Analysis</span>
+                    </a>
+                </li>
+                <!--
+                <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                    <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                        <span class="am-icon-calendar"></span> 进度 </span>
+                    </a>
+                </li> -->
+                <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"
+                                               class="tpl-header-list-link"><span
+                        class="am-icon-arrows-alt"></span> <span class="admin-fullText">Full Screen</span></a></li>
+
+                <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                    <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                        <span class="tpl-header-list-user-nick">lz5y15</span><span
+                            class="tpl-header-list-user-ico"> <img
+                            src="{{ url_for('static',filename='assets/img/user01.png') }}"></span>
+                    </a>
+                    <ul class="am-dropdown-content">
+                        <li><a href="#"><span class="am-icon-bell-o"></span> Profit</a></li>
+                        <li><a href="#"><span class="am-icon-cog"></span> Setting</a></li>
+                        <li><a href="#"><span class="am-icon-power-off"></span> Quit</a></li>
+                    </ul>
+                </li>
+                <li><a href="###" class="tpl-header-list-link"><span
+                        class="am-icon-sign-out tpl-header-list-ico-out-size"></span></a></li>
+            </ul>
+        </div>
+    </header>
+
+    {% block body %} {% endblock %}
+
+</div>
+{% block jscript %} {% endblock %}
 <script src="{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
 <script src="{{ url_for('static',filename='assets/js/amazeui.min.js') }}"></script>
-{% block jscript %} {% endblock %}
+<script src="{{ url_for('static',filename='assets/js/iscroll.js') }}"></script>
+<script src="{{ url_for('static',filename='assets/js/app.js') }}"></script>
 </body>
 </html>

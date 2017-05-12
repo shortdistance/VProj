@@ -2,27 +2,28 @@ from flask import session, redirect, url_for, render_template, jsonify, request
 from . import main
 from script.models.area import Area, District
 from script.services.area import location_search
-
+import json
 
 @main.route('/hpp/index')
 def hpp():
     area_list = Area.get_all_areas()
     district_list = District.get_districts_under_area(area_list[0]['PostcodeAreaCode'])
-    return render_template('hpp/index.html', area_list=area_list, district_list=district_list)
+    return render_template('hpp/index.html', area_list=json.dumps(area_list), district_list=json.dumps(district_list))
 
 
 @main.route('/hpp/index/<string:area_code>')
 def hpp_link_area(area_code):
     area_list = Area.get_all_areas()
     district_list = District.get_districts_under_area(area_code)
-    return render_template('hpp/index.html', area_list=area_list, district_list=district_list)
+    return render_template('hpp/index.html', area_list=json.dumps(area_list), district_list=json.dumps(district_list))
 
 
-@main.route('/hpp/area/detail', methods=['GET'])
+@main.route('/hpp/area/detail')
 def get_a_area():
     qry_str = request.args.get('location')
     bexist, ptype, poutput = location_search(qry_str)
-    return render_template('/hpp/details.html', bexist=bexist, ptype=ptype, poutput=poutput)
+    print(poutput)
+    return render_template('/hpp/details.html', qry_str=qry_str, bexist=bexist, ptype=ptype, poutput=poutput)
 
 
 

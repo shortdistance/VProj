@@ -1,13 +1,665 @@
 {% extends 'layout.html' %}
-{% block head %}
-{% endblock %}
+{% block head %} {% endblock %}
 {% block style %}
+    <style>
+        div {
+            /*border: 1px solid red;*/
+        }
+    </style>
 {% endblock %}
+
 {% block body %}
-    {{ bexist }}<br>
-    {{ ptype }}<br>
-    {{ poutput }}
+    <div class="tpl-page-container tpl-page-header-fixed">
+        <div class="tpl-left-nav tpl-left-nav-hover">
+            <div class="tpl-left-nav-title">
+                location
+            </div>
+            <div class="tpl-left-nav-list">
+                <ul class="tpl-left-nav-menu">
+
+                    {% if ptype == 1 %}
+                        <li class="tpl-left-nav-item">
+                            <a href="{{ url_for('main.get_a_area', location=qry_str) }}"
+                               class="nav-link tpl-left-nav-link-list active">
+                                <i class="am-icon-location-arrow"></i>
+                                <span>{{ poutput['district']['PostcodeDistrict'] }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if ptype == 2 %}
+                        {% if bexist==1 and poutput['district'] %}
+                            <li class="tpl-left-nav-item">
+                                <a href="{{ url_for('main.get_a_area', location=qry_str) }}"
+                                   class="nav-link tpl-left-nav-link-list active">
+                                    <i class="am-icon-location-arrow"></i>
+                                    <span>{{ qry_str }}</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                    {% if ptype ==3 %}
+                        {% if bexist==1 and poutput['district_list']|length>0 %}
+                            <li class="tpl-left-nav-item">
+                                <a href="javascript:;" class="nav-link tpl-left-nav-link-list">
+                                    <i class="am-icon-list"></i>
+                                    <span>{{ qry_str }}</span>
+                                    <i class="tpl-left-nav-content tpl-badge-danger">
+                                        {{ poutput['district_list']|length }}
+                                    </i>
+                                    <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
+                                </a>
+                                <ul class="tpl-left-nav-sub-menu" style="display: none;">
+                                    {% for p in poutput['district_list'] %}
+                                        <li>
+                                            <a href="{{ url_for('main.get_a_area', location=p.PostcodeDistrict) }}">
+                                                <i class="am-icon-angle-right"></i>
+                                                <span>{{ p.PostcodeDistrict }}</span>
+                                                <i class="tpl-left-nav-content-ico am-fr am-margin-right"></i>
+                                            </a>
+
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="tpl-content-wrapper">
+            <div class="tpl-portlet-components">
+                <div class="portlet-title">
+                    <div class="caption font-green bold">
+                        <span class="am-icon-code"></span> Summarise
+                    </div>
+                </div>
+                <div class="tpl-block">
+                    <div class="am-g">
+                        <div class="row">
+                            <div class="am-u-lg-4 am-u-md-4 am-u-sm-12">
+                                <div class="dashboard-stat blue">
+                                    <div class="visual">
+                                        <i class="am-icon-comments-o"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number"> {{ poutput['hpp_analysis']['_count']['_total'] }}</div>
+                                        <div class="desc"> Total Sales</div>
+                                    </div>
+                                    <a class="more" href="#"> More
+                                        <i class="m-icon-swapright m-icon-white"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="am-u-lg-4 am-u-md-4 am-u-sm-12">
+                                <div class="dashboard-stat red">
+                                    <div class="visual">
+                                        <i class="am-icon-bar-chart-o"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number">
+                                            £{{ poutput['hpp_analysis']['_avg_price']['_total'] }}</div>
+                                        <div class="desc"> Average Price</div>
+                                    </div>
+                                    <a class="more" href="#"> More
+                                        <i class="m-icon-swapright m-icon-white"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="am-u-lg-4 am-u-md-4 am-u-sm-12">
+                                <div class="dashboard-stat green">
+                                    <div class="visual">
+                                        <i class="am-icon-apple"></i>
+                                    </div>
+                                    <div class="details">
+                                        <div class="number"> {{ poutput['hpp_analysis']['_incr_rate']['_total']*100 }}%</div>
+                                        <div class="desc"> Increase rate</div>
+                                    </div>
+                                    <a class="more" href="#"> More
+                                        <i class="m-icon-swapright m-icon-white"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                <div class="portlet-title">
+                                    <div class="caption font-green bold">
+                                        <span class="am-icon-code"></span> Property Type
+                                    </div>
+                                </div>
+                                <div class="tpl-echarts tpl-chart-mb" id="tpl-echarts-E">
+
+                                </div>
+                            </div>
+                            <div class="am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                <div class="portlet-title">
+                                    <div class="caption font-green bold">
+                                        <span class="am-icon-code"></span> New/Old
+                                    </div>
+                                </div>
+                                <div class="tpl-echarts tpl-chart-mb" id="tpl-echarts-F">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tpl-block">
+                    <div class="am-g">
+                        <div class="row">
+                            <div class="am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                <div class="portlet-title">
+                                    <div class="caption font-green bold">
+                                        <span class="am-icon-code"></span> Price
+                                    </div>
+                                </div>
+                                <div class="tpl-echarts tpl-chart-mb" id="tpl-echarts-C">
+
+                                </div>
+                            </div>
+                            <div class="am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                <div class="portlet-title">
+                                    <div class="caption font-green bold">
+                                        <span class="am-icon-code"></span> Increase Rate
+                                    </div>
+                                </div>
+                                <div class="tpl-echarts tpl-chart-mb" id="tpl-echarts-D">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                <div class="portlet-title">
+                                    <div class="caption font-green bold">
+                                        <span class="am-icon-code"></span> Property Type
+                                    </div>
+                                </div>
+                                <div class="tpl-echarts tpl-chart-mb" id="tpl-echarts-A">
+
+                                </div>
+                            </div>
+                            <div class="am-u-lg-6 am-u-md-6 am-u-sm-12">
+                                <div class="portlet-title">
+                                    <div class="caption font-green bold">
+                                        <span class="am-icon-code"></span> NEW/OLD
+                                    </div>
+                                </div>
+                                <div class="tpl-echarts tpl-chart-mb" id="tpl-echarts-B">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-g">
+                        <div class="am-u-sm-12">
+                            <form class="am-form">
+                                <table class="am-table am-table-striped am-table-hover table-main">
+                                    <thead>
+                                    <tr>
+                                        <th class="table-check"><input type="checkbox" class="tpl-table-fz-check">
+                                        </th>
+                                        <th class="table-id">ID</th>
+                                        <th class="table-title">标题</th>
+                                        <th class="table-type">类别</th>
+                                        <th class="table-author am-hide-sm-only">作者</th>
+                                        <th class="table-date am-hide-sm-only">修改日期</th>
+                                        <th class="table-set">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>1</td>
+                                        <td><a href="#">Business management</a></td>
+                                        <td>default</td>
+                                        <td class="am-hide-sm-only">测试1号</td>
+                                        <td class="am-hide-sm-only">2014年9月4日 7:28:47</td>
+                                        <td>
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <button class="am-btn am-btn-default am-btn-xs am-text-secondary">
+                                                        <span class="am-icon-pencil-square-o"></span> 编辑
+                                                    </button>
+                                                    <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only">
+                                                        <span class="am-icon-copy"></span> 复制
+                                                    </button>
+                                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                        <span class="am-icon-trash-o"></span> 删除
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>2</td>
+                                        <td><a href="#">Business management</a></td>
+                                        <td>default</td>
+                                        <td class="am-hide-sm-only">测试1号</td>
+                                        <td class="am-hide-sm-only">2014年9月4日 7:28:47</td>
+                                        <td>
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <button class="am-btn am-btn-default am-btn-xs am-text-secondary">
+                                                        <span class="am-icon-pencil-square-o"></span> 编辑
+                                                    </button>
+                                                    <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only">
+                                                        <span class="am-icon-copy"></span> 复制
+                                                    </button>
+                                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                        <span class="am-icon-trash-o"></span> 删除
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="am-cf">
+
+                                    <div class="am-fr">
+                                        <ul class="am-pagination tpl-pagination">
+                                            <li class="am-disabled"><a href="#">«</a></li>
+                                            <li class="am-active"><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">4</a></li>
+                                            <li><a href="#">5</a></li>
+                                            <li><a href="#">»</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <hr>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="tpl-alert"></div>
+            </div>
+
+
+        </div>
+
+    </div>
 
 {% endblock %}
 {% block jscript %}
+    <script src="{{ url_for('static',filename='assets/js/echarts.min.js') }}"></script>
+
+    <script type="text/javascript">
+        var js_exist = {{ bexist }};
+        var js_type = {{ ptype }};
+        var js_poutput = {{ poutput|tojson|safe }};
+        console.log(js_poutput);
+
+        var x_axis_item_list = new Array();
+        var _count_list = new Array();
+        var _D_list = new Array();
+        var _S_list = new Array();
+        var _T_list = new Array();
+        var _F_list = new Array();
+        var _O_list = new Array();
+        var _N_list = new Array();
+        var _Y_list = new Array();
+        var _avg_price_list = new Array();
+        var _incr_rate_list = new Array();
+
+        for (var k in js_poutput.hpp_analysis._count) {
+            if (k != '_total') {
+                x_axis_item_list.push(k);
+                _count_list.push(js_poutput.hpp_analysis._count[k]);
+                _D_list.push(js_poutput.hpp_analysis._D[k]);
+                _S_list.push(js_poutput.hpp_analysis._S[k]);
+                _T_list.push(js_poutput.hpp_analysis._T[k]);
+                _F_list.push(js_poutput.hpp_analysis._F[k]);
+                _O_list.push(js_poutput.hpp_analysis._O[k]);
+                _N_list.push(js_poutput.hpp_analysis._N[k]);
+                _Y_list.push(js_poutput.hpp_analysis._Y[k]);
+                _avg_price_list.push(js_poutput.hpp_analysis._avg_price[k]);
+                _incr_rate_list.push(js_poutput.hpp_analysis._incr_rate[k] * 100);
+            }
+        }
+
+        //=======================
+        //chart for house property type
+        //D = Detached, S = Semi-Detached, T = Terraced, F = Flats/Maisonettes, O = Other 
+        //=======================
+        var myChartA = echarts.init(document.getElementById('tpl-echarts-A'));
+
+        optionA = {
+            title: {
+                text: ''
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['Total Sales', 'Detached', 'Semi-Detached', 'Terraced', 'Flats/Maisonettes', 'Other']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: x_axis_item_list //['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: 'Total Sales',
+                    type: 'line',
+                    data: _count_list //[120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name: 'Detached',
+                    type: 'line',
+                    data: _D_list  //[220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name: 'Semi-Detached',
+                    type: 'line',
+                    data: _S_list //[150, 232, 201, 154, 190, 330, 410]
+                },
+                {
+                    name: 'Terraced',
+                    type: 'line',
+                    data: _T_list //[320, 332, 301, 334, 390, 330, 320]
+                },
+                {
+                    name: 'Flats',
+                    type: 'line',
+                    data: _F_list//[820, 932, 901, 934, 1290, 1330, 1320]
+                },
+                {
+                    name: 'Other',
+                    type: 'line',
+                    data: _O_list//[820, 932, 901, 934, 1290, 1330, 1320]
+                }
+            ]
+        };
+        myChartA.setOption(optionA);
+
+        //=======================
+        //chart for house house New/Old
+        //Y:New built, N: Old established
+        //=======================
+        var myChartB = echarts.init(document.getElementById('tpl-echarts-B'));
+        optionB = {
+            title: {
+                text: ''
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['Total Sales', 'New', 'Old']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: x_axis_item_list //['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: 'Total Sales',
+                    type: 'line',
+                    data: _count_list //[120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name: 'New',
+                    type: 'line',
+                    data: _Y_list  //[220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name: 'Old',
+                    type: 'line',
+                    data: _N_list //[150, 232, 201, 154, 190, 330, 410]
+                }
+            ]
+        };
+        myChartB.setOption(optionB);
+
+        //=======================
+        //chart for house house Average Price
+        //=======================
+        var myChartC = echarts.init(document.getElementById('tpl-echarts-C'));
+        optionC = {
+            title: {
+                text: ''
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['Average Price']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataView: {readOnly: false},
+                    magicType: {type: ['line', 'bar']},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: x_axis_item_list //['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '£{value}'
+                }
+            },
+            series: [
+                {
+                    name: 'Average Price',
+                    type: 'line',
+                    data: _avg_price_list, //[120, 132, 101, 134, 90, 230, 210]
+                    markPoint: {
+                        data: [
+                            {type: 'max', name: 'Max'},
+                            {type: 'min', name: 'Min'}
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            {type: 'average', name: 'Average'}
+                        ]
+                    }
+                }
+            ]
+        };
+        myChartC.setOption(optionC);
+
+        //=======================
+        //chart for house Increase Rate
+        //=======================
+        var myChartD = echarts.init(document.getElementById('tpl-echarts-D'));
+        optionD = {
+            title: {
+                text: ''
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['Increase Rate']
+            },
+
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataView: {readOnly: false},
+                    magicType: {type: ['line', 'bar']},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: x_axis_item_list //['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} %'
+                }
+            },
+            series: [
+                {
+                    name: 'Increase Rate',
+                    type: 'line',
+                    data: _incr_rate_list, //[120, 132, 101, 134, 90, 230, 210]
+                    markPoint: {
+                        data: [
+                            {type: 'max', name: 'Max'},
+                            {type: 'min', name: 'Min'}
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            {type: 'average', name: 'Average'}
+                        ]
+                    }
+                }
+            ]
+        };
+        myChartD.setOption(optionD);
+
+        //=======================
+        //chart for Property Type
+        //D = Detached, S = Semi-Detached, T = Terraced, F = Flats/Maisonettes, O = Other 
+        //=======================
+        var myChartE = echarts.init(document.getElementById('tpl-echarts-E'));
+        optionE = {
+            title: {
+                text: 'Property Type',
+                subtext: '',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['Detached', 'Semi-Detached', 'Terraced', 'Flats/Maisonettes', 'Other']
+            },
+            series: [
+                {
+                    name: 'House Property Type',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        {value: js_poutput.hpp_analysis._D._total, name: 'Detached'},
+                        {value: js_poutput.hpp_analysis._S._total, name: 'Semi-Detached'},
+                        {value: js_poutput.hpp_analysis._T._total, name: 'Terraced'},
+                        {value: js_poutput.hpp_analysis._F._total, name: 'Flats/Maisonettes'},
+                        {value: js_poutput.hpp_analysis._O._total, name: 'Other'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        myChartE.setOption(optionE);
+
+        //=======================
+        //chart for house Increase Rate
+        //=======================
+        var myChartF = echarts.init(document.getElementById('tpl-echarts-F'));
+         optionF = {
+            title: {
+                text: 'NEW/OLD',
+                subtext: '',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['NEW', 'OLD']
+            },
+            series: [
+                {
+                    name: 'NEW/OLD',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        {value: js_poutput.hpp_analysis._Y._total, name: 'NEW'},
+                        {value: js_poutput.hpp_analysis._N._total, name: 'OLD'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        myChartF.setOption(optionF);
+    </script>
+
 {% endblock %}

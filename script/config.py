@@ -46,10 +46,10 @@ if USE_GCLOUD:
 else:
     # Local mysql
     DB_USER = 'root'
-    DB_PASSWORD = ''
+    DB_PASSWORD = '1qaz2wsx'
     DB_HOST = '127.0.0.1'
     DB_PORT = 3306
-    DB_NAME = 'projdb'
+    DB_NAME = 'proj_db'
     SQLALCHEMY_DATABASE_URI = (
         'mysql+pymysql://{user}:{password}@{host}:{port}/{database}').format(
         user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT,
@@ -75,3 +75,19 @@ MAIL_SUBJECT_PREFIX = '[' + PROJECT_NAME.capitalize() + ']'
 
 # The max distance between users can be found
 MAX_FOUND_DISTANCE_BETWEEN_USERS = 2000
+
+
+SOCIAL_TWITTER = {
+    'consumer_key': 'twitter consumer key',
+    'consumer_secret': 'twitter consumer secret'
+}
+
+SOCIAL_FACEBOOK = {
+    'consumer_key': 'facebook app id',
+    'consumer_secret': 'facebook app secret'
+}
+
+SOCIAL_GOOGLE = {
+    'consumer_key': 'xxxx',
+    'consumer_secret': 'xxxx'
+}

@@ -1,9 +1,7 @@
 from script.models.area import Region, Area, District
-from script.models import database
-from flask import jsonify
-import re
-import requests
-import json
+from script.models.hpp import DistrictYearHpp, DistrictYearMonthHpp
+from script.services.hpp import hpp_analysis_under_city, hpp_analysis_of_district
+import requests,json
 
 # area case 001
 print("##########test Region.get_all_regions()")
@@ -76,8 +74,65 @@ region_abbr = 'NE'
 print(District.get_all_cities_under_region(region_abbr))
 
 # rest case 012
-print("##########test api.hpp_search")
-
-
+print("##########test api.location_search")
 from script.services.area import location_search
-print(location_search('bournemouth'))
+print(location_search('SO14'))
+
+
+#hpp case 013
+print("#########3test DistrictYearHpp.get_district_hpp")
+print(DistrictYearHpp.get_district_hpp('SO16'))
+
+
+#hpp case 014
+print("#########3test DistrictYearMonthHpp")
+print(DistrictYearMonthHpp.get_district_hpp('SO14'))
+
+#hpp case 015
+print("#########test DistrictYearHpp.get_district_year_hpp")
+print(DistrictYearHpp.get_district_year_hpp('SO14', '2000','2008'))
+
+#hpp case 016
+print("#########test DistrictYearMonthHpp.get_district_year_hpp")
+print(DistrictYearMonthHpp.get_district_year_month_hpp('SO14', '200001','200801'))
+
+#hpp service case 017
+print("#########test hpp service.hpp_analysis_under_city(city_name, start_year, end_year)")
+print(hpp_analysis_under_city('Southampton'))
+
+#hpp service case 018
+print("#########test hpp service.hpp_analysis_of_district(district, start_year, end_year)")
+print(hpp_analysis_of_district('SO14','2016'))
+
+
+#area service case 019
+print("##########test area service, ptype:2##########")
+import re
+qry_str = 'SO14'
+ret = re.findall(r'[A-Z]{1,2}[0-9][A-Z0-9]?', qry_str)
+if ret and len(ret) == 1:
+    # it maybe a postcode district
+    ptype = 2
+    district = District.get_district(qry_str)
+    if district:
+        bexist = 1
+        hpp_analysis = hpp_analysis_of_district(qry_str)
+        poutput = {'district': district, 'hpp_analysis': hpp_analysis}
+        print(poutput)
+
+print("#########test area service ptype:1##########")
+qry_str='SO14 0BH'
+qry_str = qry_str.upper()
+ret = re.findall(r'[A-Z]{1,2}[0-9][A-Z0-9]? [0-9][A-Z]{1,2}', qry_str)
+print(ret)
+if ret and len(ret) == 1:
+    # it maybe a postcode
+    ptype = 1
+    r = requests.get('http://api.postcodes.io/postcodes/%s' % qry_str)
+    r_json = json.loads(r.content)
+    if r_json['status'] == 200:  # if can search, it means the postcode is valid.
+        bexist = 1
+        district = District.get_district(r_json['result']['outcode'])
+        hpp_analysis = hpp_analysis_of_district(r_json['result']['outcode'])
+        poutput = {'district': district, 'hpp_analysis': hpp_analysis}
+        print(poutput)

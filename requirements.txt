@@ -1,4 +1,4 @@
-Flask==0.11.1
+Flask==0.12
 flask-socketio
 flask-mail==0.9.1
 Flask-PageDown==0.2.2

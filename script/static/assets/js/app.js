@@ -38,6 +38,8 @@ $('.tpl-left-nav-link-list').on('click', function () {
         .end()
         .find('.tpl-left-nav-more-ico').toggleClass('tpl-left-nav-more-ico-rotate');
 })
+
+
 // ==========================
 // 头部导航隐藏菜单
 // ==========================
