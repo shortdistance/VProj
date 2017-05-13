@@ -15,7 +15,6 @@ def location_search(qry_str):
         if len(qry_str):
             qry_str = qry_str.upper()
             ret = re.findall(r'[A-Z]{1,2}[0-9][A-Z0-9]? [0-9][A-Z]{1,2}', qry_str)
-            print(ret)
             if ret and len(ret) == 1:
                 # it maybe a postcode
                 ptype = 1

@@ -5,6 +5,8 @@
         div {
             /*border: 1px solid red;*/
         }
+
+
     </style>
 {% endblock %}
 
@@ -62,7 +64,7 @@
                                                 <span class="am-badge am-badge-danger">
                                             {% endif %}
                                             {{ 100*poutput['district_hpp_analysis'][p.PostcodeDistrict]['_incr_rate']['_total'] }}％
-                                            </span> 
+                                            </span>
                                             {% if poutput['district_hpp_analysis'][p.PostcodeDistrict]['_avg_price']['_total']>=poutput['hpp_analysis']['_avg_price']['_total'] %}
                                                 <span class="am-badge am-badge-success">
                                             {% else %}
@@ -211,6 +213,7 @@
                         </div>
                     </div>
 
+                    <!--
                     <div class="am-g">
                         <div class="am-u-sm-12">
                             <form class="am-form">
@@ -296,6 +299,7 @@
                         </div>
 
                     </div>
+                    -->
                 </div>
                 <div class="tpl-alert"></div>
             </div>

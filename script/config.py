@@ -12,7 +12,6 @@ SESSION_TIMEOUT = 60 * 60
 
 # Use google cloud or not
 USE_GCLOUD = False
-
 if USE_GCLOUD:
     # Google Cloud Project ID.
     CLOUD_PROJECT_ID = 'opendata-cw2-166700'
@@ -21,27 +20,23 @@ if USE_GCLOUD:
     CLOUD_API_KEY = 'AIzaSyDubq5gCNwyhQ48XZDgcGxjAPEVn_hVjY0'
 
     # Google Cloud Auth client id
-    GLOUD_AUTH_CLIENT_ID = ''
+    GLOUD_AUTH_CLIENT_ID = '530820680296-n63so4mi7domecctilbi3630108r7e0s.apps.googleusercontent.com'
 
     # Google Cloud mysql
     CLOUDSQL_USER = 'root'
     CLOUDSQL_PASSWORD = '1qaz2wsx'
+    CLOUDSQL_IP = '104.197.148.223'
     CLOUDSQL_DATABASE = 'proj_db'
     CLOUDSQL_CONNECTION_NAME = 'opendata-cw2-166700:us-central1:projdb'
 
     # Google Cloud database uri
     SQLALCHEMY_DATABASE_URI = (
-        'mysql+pymysql://{user}:{password}@/{database}?unix_socket=/cloudsql/{connection_name}').format(
-        user=CLOUDSQL_USER, password=CLOUDSQL_PASSWORD, database=CLOUDSQL_DATABASE,
+        'mysql+pymysql://{user}:{password}@{ip}:3306/{database}?unix_socket=/cloudsql/{connection_name}').format(
+        user=CLOUDSQL_USER, password=CLOUDSQL_PASSWORD, ip=CLOUDSQL_IP, database=CLOUDSQL_DATABASE,
         connection_name=CLOUDSQL_CONNECTION_NAME)
 
     # Google Cloud Storage and upload settings.
     CLOUD_STORAGE_BUCKET = 'opendata-cw2'
-    MAX_CONTENT_LENGTH = 8 * 1024 * 1024
-    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-    CLOUD_IMAGE_FOLDER = 'imgs'
-    DEFAULT_PROFILE_IMG = 'https://res.citymaps.io/images/web/avatar_default.png'
-
 
 else:
     # Local mysql
@@ -75,19 +70,3 @@ MAIL_SUBJECT_PREFIX = '[' + PROJECT_NAME.capitalize() + ']'
 
 # The max distance between users can be found
 MAX_FOUND_DISTANCE_BETWEEN_USERS = 2000
-
-
-SOCIAL_TWITTER = {
-    'consumer_key': 'twitter consumer key',
-    'consumer_secret': 'twitter consumer secret'
-}
-
-SOCIAL_FACEBOOK = {
-    'consumer_key': 'facebook app id',
-    'consumer_secret': 'facebook app secret'
-}
-
-SOCIAL_GOOGLE = {
-    'consumer_key': 'xxxx',
-    'consumer_secret': 'xxxx'
-}

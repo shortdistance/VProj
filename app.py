@@ -4,12 +4,13 @@ from script.models.database import db_session
 from script.config import USE_GCLOUD, DEBUG
 
 app = create_app()
+'''
 from werkzeug.contrib.fixers import ProxyFix
 
 # Flask will automatically remove database sessions at the end
 # of the request or when the application shuts down
 app.wsgi_app = ProxyFix(app.wsgi_app)
-
+'''
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
