@@ -57,7 +57,7 @@
             <div class="tpl-block ">
                 <div class="am-g tpl-amazeui-form">
                     <div class="am-u-sm-offset-2 am-u-sm-10">
-                        <form class="am-form" action="{{ url_for('main.get_a_area') }}" method="get">
+                        <form class="am-form" action="{{ url_for('bpmain.get_a_area') }}" method="get">
 
                             <div class="am-form-group">
                                 <div class="am-u-sm-8">
@@ -79,7 +79,7 @@
             <div id='show_postcode_area'>
                 <h4>View by postcode area</h4>
                 {% for area in area_list %}
-                    <a href="{{ url_for('main.hpp_link_area',area_code=area.PostcodeAreaCode) }}">
+                    <a href="{{ url_for('bpmain.hpp_link_area',area_code=area.PostcodeAreaCode) }}">
                         {{ area.PostcodeAreaCode }}</a>
                 {% endfor %}
 
@@ -88,7 +88,7 @@
             <div id='show_postcode_district'>
                 <h4>View by postcode area</h4>
                 {% for district in district_list %}
-                    <a href="{{ url_for('main.get_a_area',location=district.PostcodeDistrict ) }}">
+                    <a href="{{ url_for('bpmain.get_a_area',location=district.PostcodeDistrict ) }}">
                         {{ district.PostcodeDistrict }}</a>
                 {% endfor %}
             </div>

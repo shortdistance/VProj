@@ -5,7 +5,7 @@ from script.models.area import Region, Area, District
 from script.models.hpp import DistrictYearHpp, DistrictYearMonthHpp
 from script.models.iphrp import IphrpIndexValue, IphrpAnnualChange
 
-DATA_FOLDER = '/Users/leizhang/Workspace/opendata_coursework2/data'
+DATA_FOLDER = '/Users/leizhang/Workspace/opendata_coursework2/Proj/script/static/data'
 REGION_FILE = os.path.join(DATA_FOLDER, '00.region_code_name.csv')
 AREA_FILE = os.path.join(DATA_FOLDER, '01.postcode_area_region.csv')
 DISTRICT_FILE = os.path.join(DATA_FOLDER, '02.Postcode_districts.csv')
@@ -175,14 +175,15 @@ def import_iphrp_annual_change(iphrp_annual_change_file):
 
 
 if __name__ == '__main__':
-    dropDB()
-    createDB()
-    '''
+
+    #dropDB()
+    #createDB()
+
     import_region(REGION_FILE)
     import_area(AREA_FILE)
     import_district(DISTRICT_FILE)
     import_district_year_hpp(DISTRICT_YEAR_HPP_FILE)
-    import_district_year_month_hpp(DISTRICT_YEAR_MONTH_HPP_FILE)
+    #import_district_year_month_hpp(DISTRICT_YEAR_MONTH_HPP_FILE)
     import_iphrp_index_value(IPHRP_INDEX_VALUE_FILE)
     import_iphrp_annual_change(IPHRP_ANNUAL_CHANGE_FILE)
-    '''
+

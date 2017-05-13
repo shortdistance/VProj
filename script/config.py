@@ -46,10 +46,10 @@ if USE_GCLOUD:
 else:
     # Local mysql
     DB_USER = 'root'
-    DB_PASSWORD = '1qaz2wsx'
+    DB_PASSWORD = ''
     DB_HOST = '127.0.0.1'
     DB_PORT = 3306
-    DB_NAME = 'proj_db'
+    DB_NAME = 'projdb'
     SQLALCHEMY_DATABASE_URI = (
         'mysql+pymysql://{user}:{password}@{host}:{port}/{database}').format(
         user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT,

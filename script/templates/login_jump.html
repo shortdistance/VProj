@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sample FirebaseUI App</title>
+    <!-- *******************************************************************************************
+       * TODO(DEVELOPER): Paste the initialization snippet from:
+       * Firebase Console > Overview > Add Firebase to your web app. *
+       ***************************************************************************************** -->
+    <script src="{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyBdU2GHoz_Witkf2KgzRFI4XSlzAP2Weow",
+            authDomain: "opendata-cw2-166700.firebaseapp.com",
+            databaseURL: "https://opendata-cw2-166700.firebaseio.com",
+            projectId: "opendata-cw2-166700",
+            storageBucket: "opendata-cw2-166700.appspot.com",
+            messagingSenderId: "530820680296"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <!-- The code below initializes the sign-in widget from FirebaseUI web. -->
+    <script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css"/>
+
+
+    <script type="text/javascript">
+        initApp = function () {
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    // User is signed in.
+                    var displayName = user.displayName;
+                    var email = user.email;
+                    var emailVerified = user.emailVerified;
+                    var photoURL = user.photoURL;
+                    var uid = user.uid;
+                    var providerData = user.providerData;
+                    user.getToken().then(function (accessToken) {
+                        var data = JSON.stringify({
+                            displayName: displayName,
+                            email: email,
+                            emailVerified: emailVerified,
+                            photoURL: photoURL,
+                            uid: uid,
+                            accessToken: accessToken,
+                            providerData: providerData
+                        });
+                        console.log(data);
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ url_for('api.login_check') }}",
+                            data: data,
+                            contentType: 'application/json;charset=UTF-8',
+                            dataType: 'html',
+                            success: function (response, status) {
+                                if(JSON.parse(response)["success"]==1 ){
+                                    console.log('ready to jump');
+                                    window.location.href = "{{url_for('bpmain.hpp')}}";
+                                }
+                            },
+                            error: function (response, status, error) {
+                                alert('Error: ' + error + ". Status: " + status);
+                            }
+                        });
+
+                    });
+                } else {
+                    // User is signed out.
+                    window.location.href = "{{url_for('bplogin.login')}}";
+                }
+            }, function (error) {
+                console.log(error);
+            });
+        };
+
+        window.addEventListener('load', function () {
+            initApp()
+        });
+    </script>
+</head>
+<body>
+<h1>Page Redirecting...</h1>
+</body>
+</html>

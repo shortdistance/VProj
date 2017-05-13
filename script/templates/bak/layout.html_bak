@@ -174,13 +174,13 @@
         <!--<p>UK House Paid Price Data Search and Analyse</p>-->
         <div id="nav">
 
-            <a href="{{ url_for('main.google',pagename='kml.html') }}" id="nav1">
+            <a href="{{ url_for('bpmain.google',pagename='kml.html') }}" id="nav1">
                 House Prices
             </a>
-            <a href="{{ url_for('main.google',pagename='kml.html') }}" id="nav2">
+            <a href="{{ url_for('bpmain.google',pagename='kml.html') }}" id="nav2">
                 Market trends
             </a>
-            <a href="{{ url_for('main.google',pagename='kml.html') }}" id="nav3">
+            <a href="{{ url_for('bpmain.google',pagename='kml.html') }}" id="nav3">
                 Sign In
             </a>
         </div>

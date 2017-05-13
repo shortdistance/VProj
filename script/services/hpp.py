@@ -125,7 +125,7 @@ def hpp_analysis_of_district(district, start_year=None, end_year=None):
     for key in _total_year['_price']:
         try:
             _total_year['_avg_price'][key] = int(float(_total_year['_price'][key]) / _total_year['_len'][key])
-        except ZeroDivisionError,e:
+        except ZeroDivisionError, e:
             _total_year['_avg_price'][key] = 0
 
     od = collections.OrderedDict(sorted(_total_year['_avg_price'].items()))
@@ -141,19 +141,70 @@ def hpp_analysis_of_district(district, start_year=None, end_year=None):
         if i == 0:
             _total_year['_incr_rate'][k_list[0]] = 0
         else:
-            #_total_year['_incr_rate'][k_list[i]] = round(float(v_list[i] - v_list[i - 1]) / v_list[i - 1], 2)
-            _total_year['_incr_rate'][k_list[i]] = round(float(v_list[i] - v_list[i - 1]) / v_list[i - 1] / (int(k_list[i]) - int(k_list[i - 1])), 2)
-            #_total_incs_rate += _total_year['_incr_rate'][k_list[i]]
-            _total_incs_rate += _total_year['_incr_rate'][k_list[i]]*(int(k_list[i]) - int(k_list[i - 1]))
+            # _total_year['_incr_rate'][k_list[i]] = round(float(v_list[i] - v_list[i - 1]) / v_list[i - 1], 2)
+            _total_year['_incr_rate'][k_list[i]] = round(
+                float(v_list[i] - v_list[i - 1]) / v_list[i - 1] / (int(k_list[i]) - int(k_list[i - 1])), 2)
+            # _total_incs_rate += _total_year['_incr_rate'][k_list[i]]
+            _total_incs_rate += _total_year['_incr_rate'][k_list[i]] * (int(k_list[i]) - int(k_list[i - 1]))
     try:
-        #_total_year['_incr_rate']['_total'] = round(float(_total_incs_rate) / _total_year['_len']['_total'], 2)
+        # _total_year['_incr_rate']['_total'] = round(float(_total_incs_rate) / _total_year['_len']['_total'], 2)
         _total_year['_incr_rate']['_total'] = round(float(_total_incs_rate) / (int(k_list[-1]) - int(k_list[0])), 2)
-    except ZeroDivisionError,e:
+    except ZeroDivisionError, e:
         _total_year['_incr_rate']['_total'] = 0
 
     return _total_year
 
 
+def hpp_analysis_under_city(city_name, start_year=None, end_year=None):
+    district_list = District.get_all_districts_under_city(city_name)
+    # to save total
+    _city_analysis = {
+        '_count': {},
+        '_price': {},
+        '_avg_price': {},
+        '_len': {},
+        '_incr_rate': {},
+        '_D': {},
+        '_S': {},
+        '_T': {},
+        '_F': {},
+        '_N': {},
+        '_O': {},
+        '_Y': {},
+        '_N': {},
+    }
+
+    _district_hpp = {}
+
+    for district in district_list:
+        district_hpp_analysis = hpp_analysis_of_district(district['PostcodeDistrict'], start_year, end_year)
+        _district_hpp[district['PostcodeDistrict']] = district_hpp_analysis
+
+    for each_city_hpp in _district_hpp.values():
+        for k in each_city_hpp.keys():
+            for k1 in each_city_hpp[k].keys():
+                if _city_analysis[k].has_key(k1):
+                    _city_analysis[k][k1] += each_city_hpp[k][k1]
+                else:
+                    _city_analysis[k][k1] = each_city_hpp[k][k1]
+
+    for k in _city_analysis['_avg_price'].keys():
+        if k != '_total':
+            _city_analysis['_avg_price'][k] = int(float(_city_analysis['_avg_price'][k]) / _city_analysis['_len'][k])
+            _city_analysis['_incr_rate'][k] = round(float(_city_analysis['_incr_rate'][k]) / _city_analysis['_len'][k],
+                                                    2)
+        else:
+            _city_analysis['_avg_price'][k] = int(
+                float(_city_analysis['_avg_price'][k]) * len(_city_analysis['_avg_price'].keys()) /
+                _city_analysis['_len'][k])
+            _city_analysis['_incr_rate'][k] = round(
+                float(_city_analysis['_incr_rate'][k]) * len(_city_analysis['_avg_price'].keys()) /
+                _city_analysis['_len'][k], 2)
+
+    return _city_analysis, _district_hpp
+
+
+"""
 def hpp_analysis_under_city(city_name, start_year=None, end_year=None):
     district_list = District.get_all_districts_under_city(city_name)
     # to save total
@@ -173,8 +224,11 @@ def hpp_analysis_under_city(city_name, start_year=None, end_year=None):
         '_N': {},
     }
 
+    _each_district_hpp = {}
+
     for district in district_list:
         year_hpp_list = DistrictYearHpp.get_district_year_hpp(district['PostcodeDistrict'], start_year, end_year)
+        _each_district_hpp[district['PostcodeDistrict']] = year_hpp_list
         for year_hpp in year_hpp_list:
             if _total_year['_count'].get('_total'):
                 _total_year['_count']['_total'] += year_hpp['Count']
@@ -304,5 +358,5 @@ def hpp_analysis_under_city(city_name, start_year=None, end_year=None):
             _total_incs_rate += _total_year['_incr_rate'][k_list[i]] * (int(k_list[i]) - int(k_list[i - 1]))
     _total_year['_incr_rate']['_total'] = round(float(_total_incs_rate) / (int(k_list[-1]) - int(k_list[0])), 2)
 
-    return _total_year
-
+    return _total_year, _each_district_hpp
+"""

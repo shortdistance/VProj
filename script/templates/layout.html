@@ -30,7 +30,7 @@
 <div class="wrap">
     <header class="am-topbar am-topbar-inverse admin-header">
         <div class="am-topbar-brand">
-            <a href="{{ url_for('main.hpp') }}" class="tpl-logo">
+            <a href="{{ url_for('bpmain.hpp') }}" class="tpl-logo">
                 <img src="{{ url_for('static',filename='img/logo.png') }}" height="40px" width="40px" alt="">
             </a>
         </div>
@@ -60,14 +60,15 @@
 
                 <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
                     <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
-                        <span class="tpl-header-list-user-nick">lz5y15</span><span
+                        <span class="tpl-header-list-user-nick">{{ session['displayName'] }}</span><span
                             class="tpl-header-list-user-ico"> <img
-                            src="{{ url_for('static',filename='assets/img/user01.png') }}"></span>
+                            src="{{ session['photoURL'] }}"></span>
                     </a>
+
                     <ul class="am-dropdown-content">
                         <li><a href="#"><span class="am-icon-bell-o"></span> Profit</a></li>
                         <li><a href="#"><span class="am-icon-cog"></span> Setting</a></li>
-                        <li><a href="#"><span class="am-icon-power-off"></span> Quit</a></li>
+                        <li><a href="{{ url_for('bplogin.logout') }}"><span class="am-icon-power-off"></span> Quit</a></li>
                     </ul>
                 </li>
                 <li><a href="###" class="tpl-header-list-link"><span
@@ -84,5 +85,18 @@
 <script src="{{ url_for('static',filename='assets/js/amazeui.min.js') }}"></script>
 <script src="{{ url_for('static',filename='assets/js/iscroll.js') }}"></script>
 <script src="{{ url_for('static',filename='assets/js/app.js') }}"></script>
+<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBdU2GHoz_Witkf2KgzRFI4XSlzAP2Weow",
+    authDomain: "opendata-cw2-166700.firebaseapp.com",
+    databaseURL: "https://opendata-cw2-166700.firebaseio.com",
+    projectId: "opendata-cw2-166700",
+    storageBucket: "opendata-cw2-166700.appspot.com",
+    messagingSenderId: "530820680296"
+  };
+  firebase.initializeApp(config);
+</script>
 </body>
 </html>

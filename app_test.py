@@ -76,7 +76,7 @@ print(District.get_all_cities_under_region(region_abbr))
 # rest case 012
 print("##########test api.location_search")
 from script.services.area import location_search
-print(location_search('SO14'))
+print(location_search('Southampton'))
 
 
 #hpp case 013
@@ -98,11 +98,17 @@ print(DistrictYearMonthHpp.get_district_year_month_hpp('SO14', '200001','200801'
 
 #hpp service case 017
 print("#########test hpp service.hpp_analysis_under_city(city_name, start_year, end_year)")
-print(hpp_analysis_under_city('Southampton'))
+_city_analysis, _district_hpp = hpp_analysis_under_city('Southampton')
+
+d1 = json.dumps(_city_analysis, sort_keys=True, indent=4, ensure_ascii=False, separators=(',',':'))
+print d1
+#d2 = json.dumps(_district_hpp, sort_keys=True, indent=4, ensure_ascii=False, separators=(',',':'))
+#print d2
 
 #hpp service case 018
 print("#########test hpp service.hpp_analysis_of_district(district, start_year, end_year)")
-print(hpp_analysis_of_district('SO14','2016'))
+my_json = hpp_analysis_of_district('SO15')
+d1 = json.dumps(my_json, sort_keys=True, indent=4, ensure_ascii=False, separators=(',',':'))
 
 
 #area service case 019

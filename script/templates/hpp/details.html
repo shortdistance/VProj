@@ -19,7 +19,7 @@
 
                     {% if ptype == 1 %}
                         <li class="tpl-left-nav-item">
-                            <a href="{{ url_for('main.get_a_area', location=qry_str) }}"
+                            <a href="{{ url_for('bpmain.get_a_area', location=qry_str) }}"
                                class="nav-link tpl-left-nav-link-list active">
                                 <i class="am-icon-location-arrow"></i>
                                 <span>{{ poutput['district']['PostcodeDistrict'] }}</span>
@@ -29,7 +29,7 @@
                     {% if ptype == 2 %}
                         {% if bexist==1 and poutput['district'] %}
                             <li class="tpl-left-nav-item">
-                                <a href="{{ url_for('main.get_a_area', location=qry_str) }}"
+                                <a href="{{ url_for('bpmain.get_a_area', location=qry_str) }}"
                                    class="nav-link tpl-left-nav-link-list active">
                                     <i class="am-icon-location-arrow"></i>
                                     <span>{{ qry_str }}</span>
@@ -51,11 +51,26 @@
                                 <ul class="tpl-left-nav-sub-menu" style="display: none;">
                                     {% for p in poutput['district_list'] %}
                                         <li>
-                                            <a href="{{ url_for('main.get_a_area', location=p.PostcodeDistrict) }}">
+                                            <a href="{{ url_for('bpmain.get_a_area', location=p.PostcodeDistrict) }}">
                                                 <i class="am-icon-angle-right"></i>
-                                                <span>{{ p.PostcodeDistrict }}</span>
+                                                <span><b>{{ p.PostcodeDistrict }}</b></span>
                                                 <i class="tpl-left-nav-content-ico am-fr am-margin-right"></i>
                                             </a>
+                                            {% if poutput['district_hpp_analysis'][p.PostcodeDistrict]['_incr_rate']['_total']>=poutput['hpp_analysis']['_incr_rate']['_total'] %}
+                                                <span class="am-badge am-badge-success">
+                                            {% else %}
+                                                <span class="am-badge am-badge-danger">
+                                            {% endif %}
+                                            {{ 100*poutput['district_hpp_analysis'][p.PostcodeDistrict]['_incr_rate']['_total'] }}％
+                                            </span> 
+                                            {% if poutput['district_hpp_analysis'][p.PostcodeDistrict]['_avg_price']['_total']>=poutput['hpp_analysis']['_avg_price']['_total'] %}
+                                                <span class="am-badge am-badge-success">
+                                            {% else %}
+                                                <span class="am-badge am-badge-danger">
+                                            {% endif %}
+                                            {{ poutput['district_hpp_analysis'][p.PostcodeDistrict]['_avg_price']['_total']|round|int }}
+                                            </span>
+
 
                                         </li>
                                     {% endfor %}
@@ -624,7 +639,7 @@
         //chart for house Increase Rate
         //=======================
         var myChartF = echarts.init(document.getElementById('tpl-echarts-F'));
-         optionF = {
+        optionF = {
             title: {
                 text: 'NEW/OLD',
                 subtext: '',

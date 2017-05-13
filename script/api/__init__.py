@@ -3,7 +3,7 @@ from script.models.database import db_session
 
 api = Blueprint('api', __name__)
 
-from . import rest
+from . import route_api
 
 
 
