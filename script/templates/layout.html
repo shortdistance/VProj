@@ -30,7 +30,7 @@
 <div class="wrap">
     <header class="am-topbar am-topbar-inverse admin-header">
         <div class="am-topbar-brand">
-            <a href="{{ url_for('bpmain.hpp') }}" class="tpl-logo">
+            <a href="{{ url_for('bpmain.search') }}" class="tpl-logo">
                 <img src="{{ url_for('static',filename='img/logo.png') }}" height="40px" width="40px" alt="">
             </a>
         </div>
@@ -40,20 +40,31 @@
             <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list tpl-header-list">
                 <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
                     <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
-                        <span class="am-icon-bell-o"></span>House Price Map</span>
+                        <span class="am-icon-bell-o"></span>House Paid Price</span>
                     </a>
+                    <ul class="am-dropdown-content tpl-dropdown-content">
+                        <li class="tpl-dropdown-list-bdbc">
+                            <a href="{{ url_for('bpmain.search') }}" class="tpl-dropdown-list-fl">
+                                <span class="am-icon-btn am-icon-plus tpl-dropdown-ico-btn-size tpl-badge-success"></span>
+                                House Paid Price Search
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
                 <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
                     <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
-                        <span class="am-icon-comment-o"></span> House Price Analysis</span>
+                        <span class="am-icon-comment-o"></span> House For Sale</span>
                     </a>
+                    <ul class="am-dropdown-content tpl-dropdown-content">
+                        <li class="tpl-dropdown-list-bdbc">
+                            <a href="{{ url_for('bpmain.sale_search') }}" class="tpl-dropdown-list-fl">
+                                <span class="am-icon-btn am-icon-plus tpl-dropdown-ico-btn-size tpl-badge-success"></span>
+                                Sale Search
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <!--
-                <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
-                    <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
-                        <span class="am-icon-calendar"></span> 进度 </span>
-                    </a>
-                </li> -->
                 <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"
                                                class="tpl-header-list-link"><span
                         class="am-icon-arrows-alt"></span> <span class="admin-fullText">Full Screen</span></a></li>
@@ -68,7 +79,8 @@
                     <ul class="am-dropdown-content">
                         <li><a href="#"><span class="am-icon-bell-o"></span> Profit</a></li>
                         <li><a href="#"><span class="am-icon-cog"></span> Setting</a></li>
-                        <li><a href="{{ url_for('bplogin.logout') }}"><span class="am-icon-power-off"></span> Quit</a></li>
+                        <li><a href="{{ url_for('bplogin.logout') }}"><span class="am-icon-power-off"></span> Quit</a>
+                        </li>
                     </ul>
                 </li>
                 <li><a href="###" class="tpl-header-list-link"><span
@@ -87,16 +99,16 @@
 <script src="{{ url_for('static',filename='assets/js/app.js') }}"></script>
 <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
 <script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyBdU2GHoz_Witkf2KgzRFI4XSlzAP2Weow",
-    authDomain: "opendata-cw2-166700.firebaseapp.com",
-    databaseURL: "https://opendata-cw2-166700.firebaseio.com",
-    projectId: "opendata-cw2-166700",
-    storageBucket: "opendata-cw2-166700.appspot.com",
-    messagingSenderId: "530820680296"
-  };
-  firebase.initializeApp(config);
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyBdU2GHoz_Witkf2KgzRFI4XSlzAP2Weow",
+        authDomain: "opendata-cw2-166700.firebaseapp.com",
+        databaseURL: "https://opendata-cw2-166700.firebaseio.com",
+        projectId: "opendata-cw2-166700",
+        storageBucket: "opendata-cw2-166700.appspot.com",
+        messagingSenderId: "530820680296"
+    };
+    firebase.initializeApp(config);
 </script>
 </body>
 </html>

@@ -1,0 +1,122 @@
+{% extends 'layout.html' %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/css/amazeui.datetimepicker.css') }}">
+{% endblock %}
+{% block style %}
+    <style>
+        div {
+            /*border: 1px solid red;*/
+        }
+
+        .container {
+            bottom: 0;
+            height: 100%;
+            overflow: auto;
+            background-color: #e3e7f0;
+            font-family: Effra-Medium, Arial, Geneva, sans-serif;
+        }
+
+        .center-in-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        .search_div {
+            width: 60%;
+            height: 50%;
+        }
+
+        .search_div h1 {
+            color: #04a97f;
+        }
+
+        .search_div a {
+            color: white;
+            line-height: 1.5em;
+            -webkit-align-items: center;
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="tpl-page-container tpl-page-header-fixed">
+        <div class="tpl-portlet-components center-in-center search_div">
+            <div class="portlet-title">
+                <div class="caption font-green bold">
+                    <span class="am-icon-search"></span> Search
+                </div>
+            </div>
+            <div class="tpl-block ">
+                <div class="am-g tpl-amazeui-form">
+
+
+                    <div class="am-u-sm-12">
+                        <form class="am-form am-form-horizontal" action="{{ url_for('bpmain.get_a_area') }}"
+                              method="get">
+                            <div class="am-form-group">
+                                <label for="user-name" class="am-u-sm-3 am-form-label">Location:</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" id="location" name="location"
+                                           placeholder="e.g. 'York', 'NW3', 'NW3 5TY' or 'Southampton'">
+                                </div>
+                            </div>
+                            <div class="am-form-group am-form-select">
+                                <label for="price-selection" class="am-u-sm-3 am-form-label">Price:</label>
+                                <div class="am-u-sm-9">
+                                    <select id="price-selection" name="price-selection">
+                                        <option value="0">all</option>
+                                        <option value="1"><￡100,000</option>
+                                        <option value="2">￡100,000-￡300,000</option>
+                                        <option value="3">￡300,000-￡700,000</option>
+                                        <option value="4">￡700,000-￡1,000,000</option>
+                                        <option value="5">￡1,000,000-￡2,000,000</option>
+                                        <option value="6">￡2,000,000-￡5,000,000</option>
+                                        <option value="7">￡5,000,000-￡10,000,000</option>
+                                        <option value="8">>￡10,000,000</option>
+                                    </select>
+                                    <span class="am-form-caret"></span>
+                                </div>
+                            </div>
+                            <div class="am-form-group am-form-select">
+                                <label for="price-selection" class="am-u-sm-3 am-form-label">Year Range:</label>
+                                <div class="am-u-sm-9">
+                                    <select id="daterange-selection" name="daterange-selection">
+                                        <option value="0">all</option>
+                                        <option value="1">recent 2 years</option>
+                                        <option value="2">recent 5 years</option>
+                                        <option value="3">recent 10 years</option>
+                                    </select>
+                                    <span class="am-form-caret"></span>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <div class="am-u-sm-9 am-u-sm-push-3">
+                                    <button type="submit" class="am-btn am-btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block jscript %}
+    <script src="{{ url_for('static',filename='assets/js/amazeui.datetimepicker.min.js') }}"></script>
+    <script>
+        $(function () {
+            var default_price = "0";
+            var default_daterange = "0"
+            $("#price-selection").val(default_price);
+            $("#daterange-selection").val(default_daterange);
+        });
+    </script>
+{% endblock %}

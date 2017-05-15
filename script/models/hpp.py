@@ -100,9 +100,13 @@ class DistrictYearHpp(BaseModel):
         return hpp_list
 
     @staticmethod
-    def get_district_year_hpp(district, start_year=None, end_year=None):
+    def get_district_year_hpp(district, start_price=0, end_price=0, start_year=None, end_year=None):
         hpp_list = []
         qry = db_session.query(DistrictYearHpp).filter(DistrictYearHpp.PostcodeDistrict == district)
+        if start_price:
+            qry = qry.filter(DistrictYearHpp.Price > start_price)
+        if end_price:
+            qry = qry.filter(DistrictYearHpp.Price < end_price)
         if start_year:
             qry = qry.filter(DistrictYearHpp.Year >= start_year)
         if end_year:

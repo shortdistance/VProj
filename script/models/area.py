@@ -170,16 +170,26 @@ class District(BaseModel):
 
     @staticmethod
     def get_all_districts_under_city(city_name):
+
         city_name = city_name.lower()
         ret_list = []
         for district in db_session.query(District).filter(
-                and_(District.City.ilike('%' + city_name + '%'),
+                and_(District.Region.ilike('%' + city_name + '%'),
                      District.ActivePostcodes > 0,
                      District.Population > 0,
                      District.Households > 0)).all():
             ret_json = District.distrinct_to_json(district)
             if ret_json:
                 ret_list.append(ret_json)
+        if not ret_list:
+            for district in db_session.query(District).filter(
+                    and_(District.City.ilike('%' + city_name + '%'),
+                         District.ActivePostcodes > 0,
+                         District.Population > 0,
+                         District.Households > 0)).all():
+                ret_json = District.distrinct_to_json(district)
+                if ret_json:
+                    ret_list.append(ret_json)
         return ret_list
 
     @staticmethod

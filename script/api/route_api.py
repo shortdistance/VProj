@@ -1,7 +1,7 @@
 from flask import session, redirect, url_for, render_template, jsonify, request
 from . import api
 from script.models.area import Region, Area, District
-from script.services.area import location_search
+from script.services.hpp import hpp_search
 
 
 @api.route('/login_check', methods=['POST'])
@@ -42,6 +42,7 @@ def login_check():
     else:
         return jsonify(success=0)
 
+
 # area case 001
 @api.route('/area/get_all_regions', methods=['GET'])
 def get_all_regions():
@@ -72,6 +73,19 @@ def get_areas_under_region():
 
 @api.route('/location/search', methods=['POST'])
 def location_search_ajax():
+    '''
     qry_str = request.json['location']
-    bexist, ptype, poutput = location_search(qry_str)
+    bexist, ptype, poutput = hpp_search(qry_str)
     return jsonify(bexist=bexist, ptype=ptype, poutput=poutput)
+    '''
+    loc_str = request.args.get('location')
+    price_str = request.args.get('price-selection')
+    date_str = request.args.get('daterange-selection')
+
+    bexist, ptype, poutput = hpp_search(loc_str, price_str, date_str)
+    qry_str = {
+        'loc': loc_str,
+        'price': price_str,
+        'date': date_str
+    }
+    return jsonify(qry_str=qry_str, bexist=bexist, ptype=ptype, poutput=poutput)

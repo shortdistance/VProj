@@ -57,7 +57,7 @@
                             success: function (response, status) {
                                 if(JSON.parse(response)["success"]==1 ){
                                     console.log('ready to jump');
-                                    window.location.href = "{{url_for('bpmain.hpp')}}";
+                                    window.location.href = "{{url_for('bpmain.search')}}";
                                 }
                             },
                             error: function (response, status, error) {
@@ -81,6 +81,6 @@
     </script>
 </head>
 <body>
-<h1>Page Redirecting...</h1>
+<h4>Page Redirecting...</h4>
 </body>
 </html>

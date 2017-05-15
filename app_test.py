@@ -65,8 +65,8 @@ print(District.get_all_districts())
 
 # area case 010
 print("##########test get_all_districts_under_city(city_name)")
-city_name = 'South'
-print(District.get_all_districts_under_city(city_name))
+city_name = 'London'
+print(len(District.get_all_districts_under_city(city_name)))
 
 # area case 011
 print("##########test get_all_cities_under_region(region_abbr)")
