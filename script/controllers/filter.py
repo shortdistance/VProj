@@ -1,4 +1,4 @@
-from flask import session, redirect,url_for
+from flask import session, redirect, url_for, g
 
 
 def login_filter():

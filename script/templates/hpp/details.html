@@ -261,6 +261,7 @@
         var js_exist = {{ bexist }};
         var js_type = {{ ptype }};
         var js_poutput = {{ poutput|tojson|safe }};
+        console.log(js_qry_str);
         console.log(js_exist);
         console.log(js_type);
         console.log(js_poutput);
@@ -399,6 +400,7 @@
             var _N_list = new Array();
             var _Y_list = new Array();
             var _avg_price_list = new Array();
+            var x_axis_item_list_for_incr = new Array();
             var _incr_rate_list = new Array();
 
             for (var k in js_poutput.hpp_analysis._count) {
@@ -413,10 +415,14 @@
                     _N_list.push(js_poutput.hpp_analysis._N[k]);
                     _Y_list.push(js_poutput.hpp_analysis._Y[k]);
                     _avg_price_list.push(js_poutput.hpp_analysis._avg_price[k]);
+
+                    x_axis_item_list_for_incr.push(k);
                     _incr_rate_list.push(js_poutput.hpp_analysis._incr_rate[k] * 100);
                 }
             }
 
+            x_axis_item_list_for_incr.shift();
+            _incr_rate_list.shift();
             //=======================
             //chart for house property type
             //D = Detached, S = Semi-Detached, T = Terraced, F = Flats/Maisonettes, O = Other 
@@ -635,7 +641,7 @@
                 xAxis: {
                     type: 'category',
                     boundaryGap: false,
-                    data: x_axis_item_list //['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                    data: x_axis_item_list_for_incr //['周一', '周二', '周三', '周四', '周五', '周六', '周日']
                 },
                 yAxis: {
                     type: 'value',

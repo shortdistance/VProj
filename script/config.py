@@ -70,3 +70,5 @@ MAIL_SUBJECT_PREFIX = '[' + PROJECT_NAME.capitalize() + ']'
 
 # The max distance between users can be found
 MAX_FOUND_DISTANCE_BETWEEN_USERS = 2000
+
+ZOOPLER_KEY = 'hkcbz38j32pqgepepv7nx5vu'

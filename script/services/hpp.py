@@ -1,4 +1,4 @@
-from script.models.area import Region, Area, District
+from script.models.area import District
 from script.models.hpp import DistrictYearHpp
 import collections
 import re
@@ -116,8 +116,9 @@ def hpp_search(loc_str, price_flag, date_flag):
                     district_list = District.get_all_districts_under_city(loc_str)
                     if district_list:
                         bexist = 1
-                        new_district_list, _city_analysis, _district_hpp = hpp_analysis_under_city(loc_str, start_price, end_price,
-                                                                                start_date, end_date)
+                        new_district_list, _city_analysis, _district_hpp = hpp_analysis_under_city(loc_str, start_price,
+                                                                                                   end_price,
+                                                                                                   start_date, end_date)
                         poutput = {'district_list': new_district_list, 'hpp_analysis': _city_analysis,
                                    'district_hpp_analysis': _district_hpp}
     except Exception, e:
@@ -308,7 +309,6 @@ def hpp_analysis_under_city(city_name, start_price, end_price, start_date, end_d
             new_district_list.append(district)
             _district_hpp[district['PostcodeDistrict']] = district_hpp_analysis
 
-
     if _district_hpp:
         for each_city_hpp in _district_hpp.values():
             for k in each_city_hpp.keys():
@@ -318,17 +318,21 @@ def hpp_analysis_under_city(city_name, start_price, end_price, start_date, end_d
                     else:
                         _city_analysis[k][k1] = each_city_hpp[k][k1]
 
+        total_avg_price = 0
+        total_incr_rate = 0
         for k in _city_analysis['_avg_price'].keys():
             if k != '_total':
-                _city_analysis['_avg_price'][k] = int(float(_city_analysis['_avg_price'][k]) / _city_analysis['_len'][k])
-                _city_analysis['_incr_rate'][k] = round(float(_city_analysis['_incr_rate'][k]) / _city_analysis['_len'][k],
-                                                        2)
-            else:
                 _city_analysis['_avg_price'][k] = int(
-                    float(_city_analysis['_avg_price'][k]) * len(_city_analysis['_avg_price'].keys()) /
-                    _city_analysis['_len'][k])
+                    float(_city_analysis['_avg_price'][k]) / _city_analysis['_len'][k])
                 _city_analysis['_incr_rate'][k] = round(
-                    float(_city_analysis['_incr_rate'][k]) * len(_city_analysis['_avg_price'].keys()) /
-                    _city_analysis['_len'][k], 2)
+                    float(_city_analysis['_incr_rate'][k]) / _city_analysis['_len'][k],
+                    2)
+                total_avg_price += _city_analysis['_avg_price'][k]
+                total_incr_rate += _city_analysis['_incr_rate'][k]
+
+
+        _city_analysis['_avg_price']['_total'] = int(float(total_avg_price) / (len(_city_analysis['_avg_price']) - 1))
+        _city_analysis['_incr_rate']['_total'] = round(
+            float(total_incr_rate) / (len(_city_analysis['_incr_rate']) - 1 - 1), 2)
 
     return new_district_list, _city_analysis, _district_hpp

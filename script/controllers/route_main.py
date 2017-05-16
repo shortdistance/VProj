@@ -1,13 +1,13 @@
-from flask import render_template, request
-from . import bpmain
-from script.models.area import Area, District
+from flask import render_template, request,g
+from . import bpmain,bpmain_filter
 from script.services.hpp import hpp_search
+from script.services.sale import sale_search
 import json
 from filter import login_filter
 from script.models.database import db_session
 
-bpmain.before_request(login_filter)
 
+bpmain_filter.before_request(login_filter)
 
 @bpmain.after_request
 def close_session_after_request(response):
@@ -15,33 +15,59 @@ def close_session_after_request(response):
     return response
 
 
+@bpmain.route('/')
 @bpmain.route('/hpp/search')
-def search():
+def hpp_search_page():
     return render_template('hpp/search.html')
 
 
-@bpmain.route('/sale/search')
-def sale_search():
+@bpmain_filter.route('/sale/search')
+def sale_search_page():
     return render_template('sale/search.html')
 
 
 @bpmain.route('/hpp/area/detail')
-def get_a_area():
+def location_hpp_details():
     loc_str = request.args.get('location')
-    price_str = request.args.get('price-selection')
-    date_str = request.args.get('daterange-selection')
+    price_flag = request.args.get('price-selection')
+    date_flag = request.args.get('daterange-selection')
 
-    bexist, ptype, poutput = hpp_search(loc_str, price_str, date_str)
+    bexist, ptype, poutput = hpp_search(loc_str, price_flag, date_flag)
     qry_str = {
         'loc': loc_str,
-        'price': price_str,
-        'date': date_str
+        'price': price_flag,
+        'date': date_flag
     }
 
-    if bexist and poutput:
+    if bexist and poutput and poutput['hpp_analysis']:
         return render_template('/hpp/details.html', qry_str=qry_str, bexist=bexist, ptype=ptype, poutput=poutput)
     else:
         return render_template('hpp/search.html')
+
+
+@bpmain_filter.route('/sale/area/detail')
+def location_sale_details():
+    loc_str = request.args.get('location')
+    price_flag = request.args.get('price-selection')
+    type_flag = request.args.get('type-selection')
+
+    bexist, ptype, poutput = sale_search(loc_str, price_flag=None, type_flag=None)
+    qry_str = {
+        'loc': loc_str,
+        'price': price_flag,
+        'type': type_flag
+
+    }
+
+    if bexist and poutput and poutput['sale_analysis']:
+        return render_template('/sale/details.html', qry_str=qry_str, bexist=bexist, ptype=ptype, poutput=poutput)
+    else:
+        return render_template('sale/search.html')
+
+
+@bpmain.route('/sale/property/see_details')
+def see_property_details():
+    pass
 
 
 @bpmain.route('/admin/<string:pagename>')

@@ -30,7 +30,7 @@
 <div class="wrap">
     <header class="am-topbar am-topbar-inverse admin-header">
         <div class="am-topbar-brand">
-            <a href="{{ url_for('bpmain.search') }}" class="tpl-logo">
+            <a href="{{ url_for('bpmain.hpp_search_page') }}" class="tpl-logo">
                 <img src="{{ url_for('static',filename='img/logo.png') }}" height="40px" width="40px" alt="">
             </a>
         </div>
@@ -44,7 +44,7 @@
                     </a>
                     <ul class="am-dropdown-content tpl-dropdown-content">
                         <li class="tpl-dropdown-list-bdbc">
-                            <a href="{{ url_for('bpmain.search') }}" class="tpl-dropdown-list-fl">
+                            <a href="{{ url_for('bpmain.hpp_search_page') }}" class="tpl-dropdown-list-fl">
                                 <span class="am-icon-btn am-icon-plus tpl-dropdown-ico-btn-size tpl-badge-success"></span>
                                 House Paid Price Search
                             </a>
@@ -58,7 +58,7 @@
                     </a>
                     <ul class="am-dropdown-content tpl-dropdown-content">
                         <li class="tpl-dropdown-list-bdbc">
-                            <a href="{{ url_for('bpmain.sale_search') }}" class="tpl-dropdown-list-fl">
+                            <a href="{{ url_for('bpmain_filter.sale_search_page') }}" class="tpl-dropdown-list-fl">
                                 <span class="am-icon-btn am-icon-plus tpl-dropdown-ico-btn-size tpl-badge-success"></span>
                                 Sale Search
                             </a>
@@ -92,12 +92,12 @@
     {% block body %} {% endblock %}
 
 </div>
-{% block jscript %} {% endblock %}
 <script src="{{ url_for('static',filename='assets/js/jquery.min.js') }}"></script>
 <script src="{{ url_for('static',filename='assets/js/amazeui.min.js') }}"></script>
 <script src="{{ url_for('static',filename='assets/js/iscroll.js') }}"></script>
 <script src="{{ url_for('static',filename='assets/js/app.js') }}"></script>
 <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+{% block jscript %} {% endblock %}
 <script>
     // Initialize Firebase
     var config = {

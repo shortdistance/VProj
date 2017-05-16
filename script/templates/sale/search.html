@@ -1,6 +1,5 @@
 {% extends 'layout.html' %}
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static',filename='assets/css/amazeui.datetimepicker.css') }}">
 {% endblock %}
 {% block style %}
     <style>
@@ -59,7 +58,7 @@
 
 
                     <div class="am-u-sm-12">
-                        <form class="am-form am-form-horizontal" action="{{ url_for('bpmain.get_a_area') }}"
+                        <form class="am-form am-form-horizontal" action="{{ url_for('bpmain_filter.location_sale_details') }}"
                               method="get">
                             <div class="am-form-group">
                                 <label for="user-name" class="am-u-sm-3 am-form-label">Location:</label>
@@ -85,6 +84,18 @@
                                     <span class="am-form-caret"></span>
                                 </div>
                             </div>
+                            <div class="am-form-group am-form-select">
+                                <label for="price-selection" class="am-u-sm-3 am-form-label">Type:</label>
+                                <div class="am-u-sm-9">
+                                    <select id="type-selection" name="type-selection">
+                                        <option value="0">all</option>
+                                        <option value="1">Houses</option>
+                                        <option value="2">Flats</option>
+                                        <option value="3">Farms/Lands</option>
+                                    </select>
+                                    <span class="am-form-caret"></span>
+                                </div>
+                            </div>
                             <div class="am-form-group">
                                 <div class="am-u-sm-9 am-u-sm-push-3">
                                     <button type="submit" class="am-btn am-btn-primary">Search</button>
@@ -98,7 +109,6 @@
     </div>
 {% endblock %}
 {% block jscript %}
-    <script src="{{ url_for('static',filename='assets/js/amazeui.datetimepicker.min.js') }}"></script>
     <script>
         $(function () {
             var default_price = "0";

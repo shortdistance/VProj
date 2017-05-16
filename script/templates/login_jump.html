@@ -57,7 +57,7 @@
                             success: function (response, status) {
                                 if(JSON.parse(response)["success"]==1 ){
                                     console.log('ready to jump');
-                                    window.location.href = "{{url_for('bpmain.search')}}";
+                                    window.location.href = "{{url_for('bpmain.hpp_search_page')}}";
                                 }
                             },
                             error: function (response, status, error) {
