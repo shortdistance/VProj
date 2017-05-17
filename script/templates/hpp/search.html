@@ -64,7 +64,15 @@
                                 <label for="user-name" class="am-u-sm-3 am-form-label">Location:</label>
                                 <div class="am-u-sm-9">
                                     <input type="text" id="location" name="location"
-                                           placeholder="e.g. 'York', 'NW3', 'NW3 5TY' or 'Southampton'">
+                                           placeholder="e.g. 'York', 'NW3', 'NW3 5TY' or 'Southampton'"
+                                           list="city_list">
+                                    <datalist id="city_list">
+                                        <option value="London">London&emsp;£1,378,287&emsp;44%</option>
+                                        <option value="Manchester">Manchester&emsp;£451,082&emsp;18%</option>
+                                        <option value="Birmingham">Birmingham&emsp;£271,816&emsp;16%</option>
+                                        <option value="York">Birmingham&emsp;£199,775&emsp;6%</option>
+                                        <option value="Liverpool">Liverpool&emsp;£166,956&emsp;5%</option>
+                                    </datalist>
                                 </div>
                             </div>
                             <div class="am-form-group am-form-select">

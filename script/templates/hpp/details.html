@@ -26,6 +26,16 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+
+        .brightness {
+            background-color: white;
+            display: inline-block;
+
+        }
+
+        .brightness img:hover {
+            opacity: .5;
+        }
     </style>
 {% endblock %}
 
@@ -33,11 +43,22 @@
     <div class="tpl-page-container tpl-page-header-fixed">
         <div class="tpl-left-nav tpl-left-nav-hover">
             <div class="tpl-left-nav-title">
+                Advertisement
+            </div>
+            <div class="brightness">
+                <a href="https://www.millerhomes.co.uk" target="_blank"><img
+                        src="{{ url_for('static', filename='img/advertising.png') }}"
+                        style="width:230px; height:200px;"/></a>
+            </div>
+            <hr/>
+            <div class="tpl-left-nav-title">
                 location
+            </div>
+            <div>
+                <hr/>
             </div>
             <div class="tpl-left-nav-list">
                 <ul class="tpl-left-nav-menu">
-
                     {% if ptype == 1 %}
                         <li class="tpl-left-nav-item">
                             <a href="/hpp/area/detail?location={{ poutput['district_list'][0]['PostcodeDistrict'] }}&price-selection={{ qry_str['price'] }}&daterange-selection={{ qry_str['date'] }}"
@@ -107,7 +128,8 @@
                         <span class="am-icon-code"></span> Map
                     </div>
                 </div>
-                <input type="button" class="am-btn am-btn-primary am-btn-min" id="show-btn" onclick="display('map');" value="Hide"/>
+                <input type="button" class="am-btn am-btn-primary am-btn-min" id="show-btn" onclick="display('map');"
+                       value="Hide"/>
                 <div class="tpl-block">
                     <div class="am-g">
                         <div id="map"></div>
@@ -133,7 +155,7 @@
                                         </div>
                                         <div class="desc"> Total Sales</div>
                                     </div>
-                                    <a class="more" href="#"> More
+                                    <a class="more" href="{{ url_for('bpmain_filter.hpp_history_records') }}"> More
                                         <i class="m-icon-swapright m-icon-white"></i>
                                     </a>
                                 </div>
@@ -148,7 +170,7 @@
                                             £{{ poutput['hpp_analysis']['_avg_price']['_total'] }}</div>
                                         <div class="desc"> Average Price</div>
                                     </div>
-                                    <a class="more" href="#"> More
+                                    <a class="more">&nbsp;
                                         <i class="m-icon-swapright m-icon-white"></i>
                                     </a>
                                 </div>
@@ -162,7 +184,7 @@
                                         <div class="number"> {{ poutput['hpp_analysis']['_incr_rate']['_total']*100 }}%</div>
                                         <div class="desc"> Increase rate</div>
                                     </div>
-                                    <a class="more" href="#"> More
+                                    <a class="more">&nbsp;
                                         <i class="m-icon-swapright m-icon-white"></i>
                                     </a>
                                 </div>
@@ -280,6 +302,7 @@
             var infoWindow;
             var markers = [];
             var contentString;
+
             function initialise() {
 
                 var pos = {

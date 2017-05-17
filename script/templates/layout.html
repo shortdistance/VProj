@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>HPPD | UK House Paid Price Data Search and Analyse</title>
+    <title>Estate Investor | Real estate investment in UK</title>
     <meta name="description" content="">
     <meta name="keywords" content="index">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,6 +23,8 @@
     .wrap {
         height: 100%;
         width: 100%;
+        background-image: url('/static/img/backgroud_img.jpg');
+        background-repeat: repeat-y;
     }
 </style>
 {% block style %} {% endblock %}
@@ -31,7 +33,7 @@
     <header class="am-topbar am-topbar-inverse admin-header">
         <div class="am-topbar-brand">
             <a href="{{ url_for('bpmain.hpp_search_page') }}" class="tpl-logo">
-                <img src="{{ url_for('static',filename='img/logo.png') }}" height="40px" width="40px" alt="">
+                <img src="{{ url_for('static',filename='img/logo_new.png') }}" style="width:60%;height:60%;" alt="">
             </a>
         </div>
 
@@ -61,6 +63,26 @@
                             <a href="{{ url_for('bpmain_filter.sale_search_page') }}" class="tpl-dropdown-list-fl">
                                 <span class="am-icon-btn am-icon-plus tpl-dropdown-ico-btn-size tpl-badge-success"></span>
                                 Sale Search
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+                    <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
+                        <span class="am-icon-comment-o"></span> Analysis Report</span>
+                    </a>
+                    <ul class="am-dropdown-content tpl-dropdown-content">
+                        <li class="tpl-dropdown-list-bdbc">
+                            <a href="{{ url_for('bpmain_filter.hpp_report_2017') }}" class="tpl-dropdown-list-fl">
+                                <span class="am-icon-btn am-icon-plus tpl-dropdown-ico-btn-size tpl-badge-success"></span>
+                                2017 Spring Report
+                            </a>
+                        </li>
+                        <li class="tpl-dropdown-list-bdbc">
+                            <a href="{{ url_for('bpmain_filter.hpp_report_2016') }}" class="tpl-dropdown-list-fl">
+                                <span class="am-icon-btn am-icon-plus tpl-dropdown-ico-btn-size tpl-badge-success"></span>
+                                2016 EHS Headline Report
                             </a>
                         </li>
                     </ul>
