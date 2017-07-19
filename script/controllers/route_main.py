@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
 from . import main, main_filter
-from filter import login_filter
+from script.controllers.filter import login_filter
 from script.models.database import db_session
 import requests
 
