@@ -17,21 +17,28 @@ app = Celery('tasks',
 
 @periodic_task(run_every=timedelta(seconds=15))
 def a():
-    waves_json = get_waves()
-    tides_json = get_tides()
+    msg = {'msg': ''}
+    try:
+        waves_json = get_waves()
+        tides_json = get_tides()
 
-    if isinstance(waves_json, str):
-        waves_json = json.loads(waves_json)
+        if isinstance(waves_json, str):
+            waves_json = json.loads(waves_json)
 
-    if isinstance(tides_json, str):
-        tides_json = json.loads(tides_json)
+        if isinstance(tides_json, str):
+            tides_json = json.loads(tides_json)
 
-    json_data = {}
-    if waves_json and tides_json:
-        json_data = dict(waves_json=waves_json, tides_json=tides_json)
-        insert_db(mongodb_url, json_data)
+        json_data = {}
+        if waves_json and tides_json:
+            json_data = dict(waves_json=waves_json, tides_json=tides_json)
+            insert_db(mongodb_url, json_data)
+            msg['msg'] = 'OK'
+        else:
+            msg['msg'] = 'BLANK'
+    except Exception as e:
+        msg['msg'] = e.__str__()
 
-    return json_data
+    return msg
 
 
 '''
