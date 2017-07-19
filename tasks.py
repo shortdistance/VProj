@@ -7,7 +7,6 @@ from script.models.mongodb import insert_db
 import json
 import os
 
-
 redis_url = os.environ.get('REDIS_URL') or REDIS_URL
 rabbit_url = os.environ.get('RABBITMQ_BIGWIG_URL') or RABBITMQ_BIGWIG_URL
 mongodb_url = os.environ.get('MONGODB_URI') or MONGODB_URI
@@ -23,8 +22,11 @@ def a():
 
     if isinstance(waves_json, str):
         waves_json = json.loads(waves_json)
+
+    if isinstance(tides_json, str):
         tides_json = json.loads(tides_json)
 
+    json_data = {}
     if waves_json and tides_json:
         json_data = dict(waves_json=waves_json, tides_json=tides_json)
         insert_db(mongodb_url, json_data)
