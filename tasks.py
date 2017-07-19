@@ -6,11 +6,10 @@ from script.util import get_waves, get_tides
 import json
 import os
 
-redis_url = os.environ.get('REDIS_URL') or  REDIS_URL
+redis_url = os.environ.get('REDIS_URL') or REDIS_URL
 rabbit_url = os.environ.get('RABBITMQ_BIGWIG_URL') or RABBITMQ_BIGWIG_URL
 
-
-app = Celery('tasks', backend=redis_url,
+app = Celery('tasks',
              broker=rabbit_url)
 
 
