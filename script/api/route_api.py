@@ -1,7 +1,7 @@
+# -*-coding:utf-8-*-
 from flask import session, redirect, url_for, render_template, jsonify, request
 from . import api
 
-# -*-coding:utf-8-*-
 import requests
 import json
 from xml.etree.ElementTree import fromstring
@@ -9,23 +9,22 @@ from xmljson import parker, Parker
 
 
 def xml_format(xml):
-    xml = xml.replace('   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"', '')
-    xml = xml.replace('   xmlns:wfs="http://www.opengis.net/wfs"', '')
-    xml = xml.replace('   xmlns:gml="http://www.opengis.net/gml"', '')
-    xml = xml.replace('   xmlns:ogc="http://www.opengis.net/ogc"', '')
-    xml = xml.replace('   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', '')
+    xml = xml.replace(b'   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"', b'')
+    xml = xml.replace(b'   xmlns:wfs="http://www.opengis.net/wfs"', b'')
+    xml = xml.replace(b'   xmlns:gml="http://www.opengis.net/gml"', b'')
+    xml = xml.replace(b'   xmlns:ogc="http://www.opengis.net/ogc"', b'')
+    xml = xml.replace(b'   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', b'')
     xml = xml.replace(
-        '   xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-basic3.xsd"', '')
-    xml = xml.replace('ms:', '')
-    xml = xml.replace('wfs:', '')
-    xml = xml.replace('gml:', '')
-    xml = xml.replace('ogc:', '')
-    xml = xml.replace('xsi:', '')
-    xml = xml.replace('schemaLocation:', '')
-    xml = xml.replace('FeatureCollection ', 'FeatureCollection')
-    xml = xml.replace("\r", "")
-    xml = xml.replace("\n", "")
-    xml = xml.replace("\r\n", "")
+        b'   xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-basic3.xsd"', b'')
+    xml = xml.replace(b'ms:', b'')
+    xml = xml.replace(b'wfs:', b'')
+    xml = xml.replace(b'gml:', b'')
+    xml = xml.replace(b'ogc:', b'')
+    xml = xml.replace(b'xsi:', b'')
+    xml = xml.replace(b'schemaLocation:', b'')
+    xml = xml.replace(b'FeatureCollection ', b'FeatureCollection')
+    xml = xml.replace(b'\r', b'')
+    xml = xml.replace(b'\n', b'')
     return xml
 
 
@@ -38,7 +37,7 @@ def http_api_get(url):
         ret = r.content
         ret = xml_format(ret)
         ret_json = json.dumps(parker.data(fromstring(ret)))
-    except Exception, e:
+    except Exception as e:
         ret_json = {}
 
     return ret_json
@@ -159,8 +158,14 @@ def get_dataset():
     waves_json = get_waves()
     tides_json = get_tides()
     met_json = get_met()
-    #print(waves_json)
-    #print(tides_json)
-    #print(met_json)
-    return jsonify(waves_json=json.loads(waves_json), tides_json=json.loads(tides_json),
-                   met_json=json.loads(met_json))
+    # print(waves_json)
+    # print(tides_json)
+    # print(met_json)
+
+    if isinstance(waves_json, str):
+        waves_json = json.loads(waves_json)
+        tides_json = json.loads(tides_json)
+        met_json = json.loads(met_json)
+
+    return jsonify(waves_json=waves_json, tides_json=tides_json,
+                   met_json=met_json)
