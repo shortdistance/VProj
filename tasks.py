@@ -15,7 +15,7 @@ app = Celery('tasks',
              broker=rabbit_url)
 
 
-@periodic_task(run_every=timedelta(seconds=15))
+@periodic_task(run_every=timedelta(seconds=15*60))
 def a():
     msg = {'msg': ''}
     try:
