@@ -19,3 +19,4 @@ PyMongo==3.4.0
 xmljson
 gevent
 gunicorn
+requests
