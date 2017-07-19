@@ -16,7 +16,7 @@ app = Celery('tasks',
              broker=rabbit_url)
 
 
-@periodic_task(run_every=timedelta(seconds=15*60))
+@periodic_task(run_every=timedelta(seconds=15))
 def a():
     waves_json = get_waves()
     tides_json = get_tides()
