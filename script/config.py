@@ -11,44 +11,7 @@ SECRET_KEY = 'AIzaSyAlpjgnmPOM99xvTK_KzGCvVWLMXC_MaA0'
 SESSION_TIMEOUT = 60 * 60
 
 # Use google cloud or not
-USE_GCLOUD = False
-if USE_GCLOUD:
-    # Google Cloud Project ID.
-    CLOUD_PROJECT_ID = 'opendata-cw2-166700'
-
-    # Google Cloud API key
-    CLOUD_API_KEY = 'AIzaSyDubq5gCNwyhQ48XZDgcGxjAPEVn_hVjY0'
-
-    # Google Cloud Auth client id
-    GLOUD_AUTH_CLIENT_ID = '530820680296-n63so4mi7domecctilbi3630108r7e0s.apps.googleusercontent.com'
-
-    # Google Cloud mysql
-    CLOUDSQL_USER = 'root'
-    CLOUDSQL_PASSWORD = '1qaz2wsx'
-    CLOUDSQL_IP = '104.197.148.223'
-    CLOUDSQL_DATABASE = 'proj_db'
-    CLOUDSQL_CONNECTION_NAME = 'opendata-cw2-166700:us-central1:projdb'
-
-    # Google Cloud database uri
-    SQLALCHEMY_DATABASE_URI = (
-        'mysql+pymysql://{user}:{password}@{ip}:3306/{database}?unix_socket=/cloudsql/{connection_name}').format(
-        user=CLOUDSQL_USER, password=CLOUDSQL_PASSWORD, ip=CLOUDSQL_IP, database=CLOUDSQL_DATABASE,
-        connection_name=CLOUDSQL_CONNECTION_NAME)
-
-    # Google Cloud Storage and upload settings.
-    CLOUD_STORAGE_BUCKET = 'opendata-cw2'
-
-else:
-    # Local mysql
-    DB_USER = 'root'
-    DB_PASSWORD = ''
-    DB_HOST = '127.0.0.1'
-    DB_PORT = 3306
-    DB_NAME = 'projdb'
-    SQLALCHEMY_DATABASE_URI = (
-        'mysql+pymysql://{user}:{password}@{host}:{port}/{database}').format(
-        user=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=DB_PORT,
-        database=DB_NAME)
+SQLALCHEMY_DATABASE_URI = 'sqlite:///projdb.sqlite'
 
 # Record number displayed in single page.
 PAGESIZE = 20
@@ -80,3 +43,5 @@ CHANNNEL_COAST_API_KEY = 'dfjn4ty1jdpm5qrgc6jwpdmk9gh7gf6u'
 RABBITMQ_BIGWIG_URL = 'amqp://1G8enNXO:Nf_uWwcyHBs-jg3UhAkRskXZSLwh7ppq@sad-nelthilta-30.bigwig.lshift.net:11020/hOM1ppDgFf6w'
 
 REDIS_URL = 'redis://h:p550d645fdb271552914055f59b174ec1e33475a443ad4aff1be2ad41c935f2da@ec2-34-226-55-20.compute-1.amazonaws.com:28949'
+
+MONGODB_URI = 'mongodb://heroku_3gr09dlh:ohb0regig4p4bsphgktn25llge@ds113063.mlab.com:13063/heroku_3gr09dlh'
