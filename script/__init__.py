@@ -25,13 +25,13 @@ def create_app():
     app.jinja_env.trim_blocks = True
 
     # start register module
-    from script.controllers import bpmain as main_blueprint
-    from script.controllers import bpmain_filter as bpmain_filter_blueprint
-    from script.controllers import bplogin as login_blueprint
-
+    from script.controllers import main as main_blueprint
+    from script.controllers import main_filter as main_filter_blueprint
+    from script.controllers import login as login_blueprint
     from script.api import api as api_blueprint
+
     app.register_blueprint(main_blueprint)
-    app.register_blueprint(bpmain_filter_blueprint)
+    app.register_blueprint(main_filter_blueprint)
     app.register_blueprint(login_blueprint)
     app.register_blueprint(api_blueprint, url_prefix='/api')
     # end register module

@@ -1,91 +1,166 @@
 from flask import session, redirect, url_for, render_template, jsonify, request
 from . import api
-from script.models.area import Region, Area, District
-from script.services.hpp import hpp_search
+
+# -*-coding:utf-8-*-
+import requests
+import json
+from xml.etree.ElementTree import fromstring
+from xmljson import parker, Parker
 
 
-@api.route('/login_check', methods=['POST'])
-def login_check():
-    '''
-    request.json
-    {
-        displayName: displayName,
-        email: email,
-        emailVerified: emailVerified,
-        photoURL: photoURL,
-        uid: uid,
-        accessToken: accessToken,
-        providerData: providerData
-    }
-    :return: 
-    '''
-    displayName = request.json['displayName']
-    email = request.json['email']
-    emailVerified = request.json['emailVerified']
-    photoURL = request.json['photoURL']
-    uid = request.json['uid']
-    accessToken = request.json['accessToken']
-    providerData = request.json['providerData']
-
-    if accessToken:
-        session['displayName'] = displayName
-        session['email'] = email
-        session['emailVerified'] = emailVerified
-        session['photoURL'] = photoURL
-        session['uid'] = uid
-        session['accessToken'] = accessToken
-        session['providerData'] = providerData
-
-        if not session['photoURL']:
-            session['photoURL'] = providerData[0]['photoURL']
-        return jsonify(success=1)
-    else:
-        return jsonify(success=0)
+def xml_format(xml):
+    xml = xml.replace('   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"', '')
+    xml = xml.replace('   xmlns:wfs="http://www.opengis.net/wfs"', '')
+    xml = xml.replace('   xmlns:gml="http://www.opengis.net/gml"', '')
+    xml = xml.replace('   xmlns:ogc="http://www.opengis.net/ogc"', '')
+    xml = xml.replace('   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"', '')
+    xml = xml.replace(
+        '   xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-basic3.xsd"', '')
+    xml = xml.replace('ms:', '')
+    xml = xml.replace('wfs:', '')
+    xml = xml.replace('gml:', '')
+    xml = xml.replace('ogc:', '')
+    xml = xml.replace('xsi:', '')
+    xml = xml.replace('schemaLocation:', '')
+    xml = xml.replace('FeatureCollection ', 'FeatureCollection')
+    xml = xml.replace("\r", "")
+    xml = xml.replace("\n", "")
+    xml = xml.replace("\r\n", "")
+    return xml
 
 
-# area case 001
-@api.route('/area/get_all_regions', methods=['GET'])
-def get_all_regions():
-    """
-    get all regions information
-    """
-    regions = Region.get_all_regions()
-    return jsonify(regionlist=regions)
+def http_api_get(url):
+    headers = {
+        'Referer': 'http://iotobservatory.io',
+        'Content-Type': 'application/json'}
+    try:
+        r = requests.get(url, headers=headers)
+        ret = r.content
+        ret = xml_format(ret)
+        ret_json = json.dumps(parker.data(fromstring(ret)))
+    except Exception, e:
+        ret_json = {}
+
+    return ret_json
 
 
-# api case 004
-@api.route('/area/get_areas_under_region', methods=['POST'])
-def get_areas_under_region():
-    """
-    get all areas under a region information
-    """
-    region_abbr = request.json['RegionAbbr']
-    areas = []
-    ret_area = {}
-    for area in Area.get_areas_under_region(region_abbr):
-        ret_area['PostcodeAreaCode'] = area.PostcodeAreaCode
-        ret_area['PostcodeAreaName'] = area.PostcodeAreaName
-        ret_area['RegionAbbr'] = region_abbr
-        ret_area['RegionName'] = area.RegionName
-        areas.append(ret_area)
-    return jsonify(areas=areas)
+def get_waves():
+    url1 = 'http://data.channelcoast.org/observations/waves/latest?key=dfjn4ty1jdpm5qrgc6jwpdmk9gh7gf6u'
+    return http_api_get(url1)
 
 
-@api.route('/location/search', methods=['POST'])
-def location_search_ajax():
-    '''
-    qry_str = request.json['location']
-    bexist, ptype, poutput = hpp_search(qry_str)
-    return jsonify(bexist=bexist, ptype=ptype, poutput=poutput)
-    '''
-    loc_str = request.args.get('location')
-    price_str = request.args.get('price-selection')
-    date_str = request.args.get('daterange-selection')
+"""
+   "featureMember":[  
+      {  
+         "waves":{  
+            "boundedBy":{  
+               "Box":{  
+                  "coordinates":"-4.2766000000,51.0581200000 -4.2766000000,51.0581200000"
+               }
+            },
+            "msGeometry":{  
+               "Point":{  
+                  "coordinates":"-4.2766000000,51.0581200000"
+               }
+            },
+            "msGeometryOSGB":{  
+               "Point":{  
+                  "coordinates":"240538.000,131226.000"
+               }
+            },
+            "id":97,
+            "sensor":"Bideford Bay",
+            "date":"20170702#213000",
+            "value":271.4,
+            "hs":0.74,
+            "type":"waves",
+            "sst":16.95
+         }
+      },
+    ]
+"""
 
-    bexist, ptype, poutput = hpp_search(loc_str, price_str, date_str)
-    qry_str = {
-        'loc': loc_str,
-        'price': price_str,
-        'date': date_str
-    }
-    return jsonify(qry_str=qry_str, bexist=bexist, ptype=ptype, poutput=poutput)
+
+def get_tides():
+    url2 = 'http://data.channelcoast.org/observations/tides/latest?key=dfjn4ty1jdpm5qrgc6jwpdmk9gh7gf6u'
+    return http_api_get(url2)
+
+
+"""
+"featureMember":[  
+      {  
+         "tide":{  
+            "boundedBy":{  
+               "Box":{  
+                  "coordinates":"-0.4906100000,50.7699500000 -0.4906100000,50.7699500000"
+               }
+            },
+            "msGeometry":{  
+               "Point":{  
+                  "coordinates":"-0.4906100000,50.7699500000"
+               }
+            },
+            "msGeometryOSGB":{  
+               "Point":{  
+                  "coordinates":"506425.000,97779.000"
+               }
+            },
+            "id":86,
+            "sensor":"Arun Platform",
+            "date":"20170702#222500",
+            "value":3.143,
+            "type":"tides"
+         }
+      },
+    ]
+"""
+
+
+def get_met():
+    url3 = 'http://data.channelcoast.org/observations/met/latest?key=dfjn4ty1jdpm5qrgc6jwpdmk9gh7gf6u'
+    return http_api_get(url3)
+
+
+"""
+"featureMember":[  
+      {  
+         "tide":{  
+            "boundedBy":{  
+               "Box":{  
+                  "coordinates":"-0.490610000000000,50.769950000000000 -0.490610000000000,50.769950000000000"
+               }
+            },
+            "msGeometry":{  
+               "Point":{  
+                  "coordinates":"-0.490610000000000,50.769950000000000"
+               }
+            },
+            "msGeometryOSGB":{  
+               "Point":{  
+                  "coordinates":"506425,97779"
+               }
+            },
+            "id":86,
+            "sensor":"Arun Platform",
+            "date":"20170702#222500",
+            "temp":17.0,
+            "value":7.0941,
+            "type":"met",
+            "dir":279.3,
+            "gust":7.768
+         }
+      },
+    ]
+"""
+
+
+@api.route('/get_info')
+def get_dataset():
+    waves_json = get_waves()
+    tides_json = get_tides()
+    met_json = get_met()
+    #print(waves_json)
+    #print(tides_json)
+    #print(met_json)
+    return jsonify(waves_json=json.loads(waves_json), tides_json=json.loads(tides_json),
+                   met_json=json.loads(met_json))

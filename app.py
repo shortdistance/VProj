@@ -1,15 +1,9 @@
 #!/bin/env python
 from script import create_app
-from script.models.database import db_session
-from script.config import USE_GCLOUD, DEBUG
+import os
 
 app = create_app()
 
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db_session.remove()
-
-
-if not USE_GCLOUD and __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5001, debug=DEBUG)
-
+if __name__ == '__main__':
+    PORT = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=5001)
