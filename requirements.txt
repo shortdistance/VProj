@@ -20,3 +20,4 @@ xmljson
 gevent
 gunicorn
 requests
+celery
