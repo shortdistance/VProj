@@ -1,4 +1,4 @@
-from script.config import REDIS_URL, RABBITMQ_BIGWIG_URL, MONGODB_URI
+from script.config import REDIS_URL, RABBITMQ_BIGWIG_URL, MONGODB_URI, SECONDS
 from datetime import timedelta
 from celery import Celery
 from celery.task import periodic_task
@@ -15,7 +15,7 @@ app = Celery('tasks',
              broker=rabbit_url)
 
 
-@periodic_task(run_every=timedelta(seconds=15*60))
+@periodic_task(run_every=timedelta(seconds=SECONDS))
 def a():
     msg = {'msg': ''}
     try:
@@ -42,6 +42,5 @@ def a():
 
 
 '''
-#run command:
-#celery worker -l info -A tasks --beat
+worker: celery worker -l info -A tasks:app --beat
 '''

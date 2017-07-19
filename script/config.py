@@ -35,8 +35,7 @@ MAIL_SUBJECT_PREFIX = '[' + PROJECT_NAME.capitalize() + ']'
 MAX_FOUND_DISTANCE_BETWEEN_USERS = 2000
 
 # channel coast api key
-CHANNNEL_COAST_API_KEY='dfjn4ty1jdpm5qrgc6jwpdmk9gh7gf6u'
-
+CHANNNEL_COAST_API_KEY = 'dfjn4ty1jdpm5qrgc6jwpdmk9gh7gf6u'
 
 CHANNNEL_COAST_API_KEY = 'dfjn4ty1jdpm5qrgc6jwpdmk9gh7gf6u'
 
@@ -45,3 +44,5 @@ RABBITMQ_BIGWIG_URL = 'amqp://1G8enNXO:Nf_uWwcyHBs-jg3UhAkRskXZSLwh7ppq@sad-nelt
 REDIS_URL = 'redis://h:p550d645fdb271552914055f59b174ec1e33475a443ad4aff1be2ad41c935f2da@ec2-34-226-55-20.compute-1.amazonaws.com:28949'
 
 MONGODB_URI = 'mongodb://heroku_3gr09dlh:ohb0regig4p4bsphgktn25llge@ds113063.mlab.com:13063/heroku_3gr09dlh'
+
+SECONDS = 900
