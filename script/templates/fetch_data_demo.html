@@ -143,30 +143,45 @@
         <div class="sidebar-pane" id="play">
             <h1 class="sidebar-header">History play<span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
             </h1>
-            <div>
-                <button class="mdl-button mdl-js-button mdl-button--primary" id="replay_btn">
-                    Replay
-                </button>
-                <!-- Accent-colored flat button -->
-                <button class="mdl-button mdl-js-button mdl-button--accent" id="stop_replay_btn">
-                    Stop
-                </button>
-            </div>
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                <tbody>
+                <tr>
+                    <td class="mdl-data-table__cell--non-numeric">
+                        <button class="mdl-button mdl-js-button mdl-button--primary" id="replay_btn">
+                            Replay
+                        </button>
+                        <!-- Accent-colored flat button -->
+                        <button class="mdl-button mdl-js-button mdl-button--accent" id="stop_replay_btn">
+                            Stop
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
 
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
-                <input class="mdl-textfield__input" type="text" id="datetime_duration" value="1 day" readonly
-                       tabIndex="-1" data-val="1-0">
-                <label for="datetime_duration" class="mdl-textfield__label">Datetime Duration</label>
-                <ul for="datetime_duration" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
-                    <li class="mdl-menu__item" data-val="1-0">1 day</li>
-                    <li class="mdl-menu__item" data-val="2-0">2 days</li>
-                    <li class="mdl-menu__item" data-val="5-0">5 days</li>
-                    <li class="mdl-menu__item" data-val="10-0">10 days</li>
-                    <li class="mdl-menu__item" data-val="30-0">30 days</li>
-                </ul>
-            </div>
-            <div id="replay_list"></div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+                            <input class="mdl-textfield__input" type="text" id="datetime_duration" value="1 day"
+                                   readonly
+                                   tabIndex="-1" data-val="1-0">
+                            <label for="datetime_duration" class="mdl-textfield__label">Datetime Duration</label>
+                            <ul for="datetime_duration" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                                <li class="mdl-menu__item" data-val="1-0">1 day</li>
+                                <li class="mdl-menu__item" data-val="2-0">2 days</li>
+                                <li class="mdl-menu__item" data-val="5-0">5 days</li>
+                                <li class="mdl-menu__item" data-val="10-0">10 days</li>
+                                <li class="mdl-menu__item" data-val="30-0">30 days</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="replay_list"></div>
+                    </td>
+                </tr>
 
+                </tbody>
+            </table>
         </div>
 
         <div class="sidebar-pane" id="download">
