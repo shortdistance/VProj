@@ -1,5 +1,5 @@
 # -*-coding:utf-8-*-
-from flask import jsonify
+from flask import jsonify, request
 from . import api
 from script.util import get_waves, get_tides, get_met
 import json
@@ -15,3 +15,12 @@ def get_dataset():
         tides_json = json.loads(tides_json)
 
     return jsonify(waves_json=waves_json, tides_json=tides_json)
+
+
+
+@api.route('/get_history_info')
+def get_history_info():
+    duration = request.json['duration']
+
+
+    pass

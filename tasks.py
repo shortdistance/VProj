@@ -6,6 +6,7 @@ from celery.schedules import crontab
 
 from script.util import get_waves, get_tides
 from script.models.mongodb import insert_db
+from datetime import datetime
 import json
 import os
 
@@ -15,7 +16,6 @@ mongodb_url = os.environ.get('MONGODB_URI') or MONGODB_URI
 
 app = Celery('tasks',
              broker=rabbit_url)
-
 
 
 @periodic_task(run_every=crontab(minute='*/15'))
@@ -33,7 +33,8 @@ def a():
 
         json_data = {}
         if waves_json and tides_json:
-            json_data = dict(waves_json=waves_json, tides_json=tides_json)
+            dt = datetime.now()
+            json_data = dict(created_at=dt, waves_json=waves_json, tides_json=tides_json)
             insert_db(mongodb_url, json_data)
             msg['msg'] = 'OK'
         else:
