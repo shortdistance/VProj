@@ -136,8 +136,8 @@ function CenterControl(controlDiv, map) {
 function setTimeLabel(newValue) {
     /* The format of new value is 20170719#03300*/
     var s = newValue;
-    var dt = s.slice(0,4)+'-'+s.slice(4,6)+'-'+s.slice(6,8)+' '+s.slice(9,11)+':'+s.slice(11,13)+':'+s.slice(13,15);
-    $("#time_center_label").html('<h4>'+dt.toString()+'</h4>');
+    var dt = s.slice(0, 4) + '-' + s.slice(4, 6) + '-' + s.slice(6, 8) + ' ' + s.slice(9, 11) + ':' + s.slice(11, 13) + ':' + s.slice(13, 15);
+    $("#time_center_label").html('<h4>' + dt.toString() + '</h4>');
 }
 
 function checkJsonInArray(json, jsonArray) {
@@ -819,6 +819,7 @@ $("#stop_replay_btn").click(function () {
     refresh_on();
 });
 
+
 function replay_nodes_list() {
     for (var i = 0; i < waves_array.length; i++) {
         var div = document.createElement('div');
@@ -830,6 +831,7 @@ function replay_nodes_list() {
 
     }
 }
+
 
 function clear_replay_nodes_list() {
     var results = document.getElementById("replay_list");

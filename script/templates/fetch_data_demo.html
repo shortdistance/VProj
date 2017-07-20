@@ -154,6 +154,22 @@
             </div>
             <div id="p1" class="demo-bar"></div>
 
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+                <input class="mdl-textfield__input" type="text" id="datetime_duration" value="1 day"
+                       onchange="datetime_duration_change()" readonly
+                       tabIndex="-1" data-val="1-0">
+                <label for="datetime_duration" class="mdl-textfield__label">Datetime Duration</label>
+                <ul for="datetime_duration" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                    <li class="mdl-menu__item" data-val="0-1">1 hour</li>
+                    <li class="mdl-menu__item" data-val="0-2">2 hours</li>
+                    <li class="mdl-menu__item" data-val="0-8">8 hours</li>
+                    <li class="mdl-menu__item" data-val="1-0">1 day</li>
+                    <li class="mdl-menu__item" data-val="2-0">2 days</li>
+                    <li class="mdl-menu__item" data-val="5-0">5 days</li>
+                    <li class="mdl-menu__item" data-val="10-0">10 days</li>
+                    <li class="mdl-menu__item" data-val="30-0">30 days</li>
+                </ul>
+            </div>
             <div id="replay_list"></div>
 
         </div>
