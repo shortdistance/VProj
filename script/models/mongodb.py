@@ -10,4 +10,4 @@ def insert_db(mongodb_url, data):
 
     db = client.get_default_database()
 
-    db.my_collection.insert_one(data, safe=True)
+    db.my_collection.insert_one(data)
