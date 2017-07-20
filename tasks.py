@@ -16,6 +16,7 @@ mongodb_url = os.environ.get('MONGODB_URI') or MONGODB_URI
 
 app = Celery('tasks',
              broker=rabbit_url)
+app.conf.timezone = 'Europe/London'
 
 
 @periodic_task(run_every=crontab(minute='*/15'))
