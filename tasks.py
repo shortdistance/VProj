@@ -18,7 +18,7 @@ app = Celery('tasks',
 
 
 
-@periodic_task(run_every=crontab(hour=7, minute=30, day_of_week=1))
+@periodic_task(run_every=crontab(minute='*/15'))
 def a():
     msg = {'msg': ''}
     try:
