@@ -2,6 +2,8 @@ from script.config import REDIS_URL, RABBITMQ_BIGWIG_URL, MONGODB_URI, SECONDS
 from datetime import timedelta
 from celery import Celery
 from celery.task import periodic_task
+from celery.schedules import crontab
+
 from script.util import get_waves, get_tides
 from script.models.mongodb import insert_db
 import json
@@ -15,7 +17,8 @@ app = Celery('tasks',
              broker=rabbit_url)
 
 
-@periodic_task(run_every=timedelta(seconds=SECONDS))
+
+@periodic_task(run_every=crontab(hour=7, minute=30, day_of_week=1))
 def a():
     msg = {'msg': ''}
     try:
