@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8361611a-81c9-44ef-938d-5467e2e22797" name="Default" comment="last version">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/static/js/app.js" afterPath="$PROJECT_DIR$/script/static/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/script/templates/fetch_data_demo.html" afterPath="$PROJECT_DIR$/script/templates/fetch_data_demo.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -53,21 +52,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fetch_data_demo.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="fetch_data_demo.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/script/templates/fetch_data_demo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="166" column="75" lean-forward="true" selection-start-line="166" selection-start-column="75" selection-end-line="166" selection-end-column="75" />
+            <state relative-caret-position="-139">
+              <caret line="166" column="75" lean-forward="false" selection-start-line="166" selection-start-column="75" selection-end-line="166" selection-end-column="75" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/script/static/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3766">
-              <caret line="101" column="1" lean-forward="true" selection-start-line="101" selection-start-column="1" selection-end-line="101" selection-end-column="1" />
+            <state relative-caret-position="463">
+              <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -152,8 +151,8 @@
       <find>replay</find>
       <find>waves_array</find>
       <find>localStorage</find>
-      <find>replay_list</find>
       <find>POST</find>
+      <find>replay_list</find>
     </findStrings>
     <replaceStrings>
       <replace>Postcode</replace>
@@ -1053,18 +1052,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/script/static/js/app.js">
+    <entry file="file://$PROJECT_DIR$/script/templates/fetch_data_demo.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3766">
-          <caret line="101" column="1" lean-forward="true" selection-start-line="101" selection-start-column="1" selection-end-line="101" selection-end-column="1" />
+        <state relative-caret-position="-139">
+          <caret line="166" column="75" lean-forward="false" selection-start-line="166" selection-start-column="75" selection-end-line="166" selection-end-column="75" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/script/templates/fetch_data_demo.html">
+    <entry file="file://$PROJECT_DIR$/script/static/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="166" column="75" lean-forward="true" selection-start-line="166" selection-start-column="75" selection-end-line="166" selection-end-column="75" />
+        <state relative-caret-position="463">
+          <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
           <folding />
         </state>
       </provider>

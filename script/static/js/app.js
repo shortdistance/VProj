@@ -96,7 +96,7 @@ function load_history_into_array(days, hours) {
             console.log('waves_array:' + waves_array.length + ',tides_array:' + tides_array.length);
         },
         error: function (response, status, error) {
-            alert('Error: ' + error + ". Status: " + status);
+            console.log('Error: ' + error + ". Status: " + status);
         }
     });
 }
@@ -235,8 +235,8 @@ function fetch_dataset_and_create_markers() {
 
             displayHistoryCount();
 
-            clear_replay_nodes_list();
-            replay_nodes_list();
+            //clear_replay_nodes_list();
+            //replay_nodes_list();
 
         },
         error: function (response, status, error) {
