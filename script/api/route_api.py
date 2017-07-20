@@ -20,10 +20,13 @@ def get_dataset():
     return jsonify(waves_json=waves_json, tides_json=tides_json)
 
 
-@api.route('/get_history_info')
+@api.route('/get_history_info', methods=['POST'])
 def get_history_info():
-    days = request.json['days']
-    hours = request.json['hours']
+    request.get_json(force=True)
+    days = request.json["days"]
+    hours = request.json["hours"]
+
+    print(days, hours)
     timedelta = dict(days=days, hours=hours)
 
     ret_list = get_data_by_timedelta(MONGODB_URI, timedelta)

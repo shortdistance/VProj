@@ -55,23 +55,9 @@ var map;
 var infoWindow;
 var time_interval = 10000;
 var my_timer;
-var HISTORY_ARRAY_LENGTH = 1800;
 
 var waves_array = new Array();
 var tides_array = new Array();
-
-/*
- if (localStorage.waves) {
- waves_array = JSON.parse(localStorage.waves);
- console.log('Read data from wave localStorage');
- }
-
- if (localStorage.tides) {
- tides_array = JSON.parse(localStorage.tides);
- console.log('Read data from tide localStorage');
- }
- */
-
 
 var bWaves = true;
 var bTides = true;
@@ -85,12 +71,14 @@ function load_history_into_array(days, hours) {
         hours: hours
     });
 
+    console.log(data);
     $.ajax({
         type: 'POST',
         url: "/api/get_history_info",
         data: data,
-        contentType: 'application/json;charset=UTF-8',
+        dataType: "json",
         success: function (response, status) {
+            console.log(response);
             waves_array = response.waves_array;
             tides_array = response.tides_array;
             console.log('waves_array:' + waves_array.length + ',tides_array:' + tides_array.length);
@@ -152,7 +140,7 @@ function CenterControl(controlDiv, map) {
     controlText.style.paddingLeft = '5px';
     controlText.style.paddingRight = '5px';
     controlText.id = "time_center_label";
-    controlText.innerHTML = '<h4>Dataset Time Label</h4>';
+    controlText.innerHTML = '<h4>Dataset Time</h4>';
 
     controlUI.appendChild(controlText);
 
@@ -190,39 +178,6 @@ function fetch_dataset_and_create_markers() {
             var waves_json = JSON.parse(JSON.stringify(data.waves_json));
             var tides_json = JSON.parse(JSON.stringify(data.tides_json));
 
-            /*
-             if (checkJsonInArray(waves_json, waves_array) == false) {
-             if (waves_array.length == HISTORY_ARRAY_LENGTH) {
-             waves_array.shift();
-             }
-             waves_array.push(waves_json);
-             }
-
-
-             try {
-             localStorage.waves = JSON.stringify(waves_array);
-             }
-             catch (e) {
-             console.log(e); // pass exception object to error handler
-             }
-             */
-
-            /*
-             if (checkJsonInArray(tides_json, tides_array) == false) {
-             if (tides_array.length == HISTORY_ARRAY_LENGTH) {
-             tides_array.shift();
-             }
-             tides_array.push(tides_json);
-             }
-
-             try {
-             localStorage.tides = JSON.stringify(tides_array);
-             }
-             catch (e) {
-             console.log(e); // pass exception object to error handler
-             }
-             */
-
             console.log(waves_array.length.toString() + ',' + tides_array.length.toString());
 
             clearWavesMarkers();
@@ -234,9 +189,6 @@ function fetch_dataset_and_create_markers() {
             create_tide_markers(tides_json);
 
             displayHistoryCount();
-
-            //clear_replay_nodes_list();
-            //replay_nodes_list();
 
         },
         error: function (response, status, error) {
@@ -386,36 +338,6 @@ function fetch_dataset_and_upgrade_markers() {
             var waves_json = JSON.parse(JSON.stringify(data.waves_json));
             var tides_json = JSON.parse(JSON.stringify(data.tides_json));
 
-            if (checkJsonInArray(waves_json, waves_array) == false) {
-                if (waves_array.length == HISTORY_ARRAY_LENGTH) {
-                    waves_array.shift();
-                }
-                waves_array.push(waves_json);
-            }
-
-            try {
-                localStorage.waves = JSON.stringify(waves_array);
-            }
-            catch (e) {
-                console.log(e); // pass exception object to error handler
-            }
-
-
-            if (checkJsonInArray(tides_json, tides_array) == false) {
-                if (tides_array.length == HISTORY_ARRAY_LENGTH) {
-                    tides_array.shift();
-                }
-                tides_array.push(tides_json);
-            }
-
-            try {
-                localStorage.tides = JSON.stringify(tides_array);
-            }
-            catch (e) {
-                console.log(e); // pass exception object to error handler
-            }
-
-
             console.log(waves_array.length.toString() + ',' + tides_array.length.toString());
 
             clearWaveResult();
@@ -425,9 +347,6 @@ function fetch_dataset_and_upgrade_markers() {
             upgrade_tide_markers(tides_json);
 
             displayHistoryCount();
-
-            clear_replay_nodes_list();
-            replay_nodes_list();
 
         },
         error: function (response, status, error) {
@@ -795,8 +714,8 @@ $('#tides_switch').change(function () {
 });
 
 function displayHistoryCount() {
-    $('div#wave_history_count').html(waves_array.length.toString() + '/' + HISTORY_ARRAY_LENGTH.toString());
-    $('div#tide_history_count').html(tides_array.length.toString() + '/' + HISTORY_ARRAY_LENGTH.toString());
+    $('div#wave_history_count').html(waves_array.length.toString());
+    $('div#tide_history_count').html(tides_array.length.toString());
 
 }
 
