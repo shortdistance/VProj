@@ -5,7 +5,7 @@ from celery.task import periodic_task
 from celery.schedules import crontab
 
 from script.util import get_waves, get_tides
-from script.models.mongodb import insert_db
+from script.models.mongodb import insert_data
 from datetime import datetime
 import json
 import os
@@ -35,7 +35,7 @@ def a():
         if waves_json and tides_json:
             dt = datetime.now()
             json_data = dict(created_at=dt, waves_json=waves_json, tides_json=tides_json)
-            insert_db(mongodb_url, json_data)
+            insert_data(mongodb_url, json_data)
             msg['msg'] = 'OK'
         else:
             msg['msg'] = 'BLANK'
