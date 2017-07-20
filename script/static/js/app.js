@@ -65,7 +65,11 @@ var bTides = true;
 var wave_markers = [];
 var tide_markers = [];
 
-function load_history_into_array(days, hours) {
+var history_info_duration = '1-0';
+
+function load_history_into_array() {
+    var days = parseInt(history_info_duration.split('-')[0]);
+    var hours = parseInt(history_info_duration.split('-')[1]);
     var data = JSON.stringify({
         days: days,
         hours: hours
@@ -108,7 +112,7 @@ function initMap() {
 
     infoWindow = new google.maps.InfoWindow();
 
-    load_history_into_array(1, 0);
+    load_history_into_array();
     fetch_dataset_and_create_markers(); //Before the timer work, refresh the page once.
     my_timer = setInterval(fetch_dataset_and_upgrade_markers, time_interval); //refresh the page by timer.
 
@@ -675,6 +679,13 @@ $('#refresh_switch').change(function () {
     }
 });
 
+
+$("#datetime_duration").change(function () {
+
+    history_info_duration = $(this).attr("data-val");
+
+});
+
 function refresh_on() {
     show_msg("Refresh on");
     $('#refresh_switch_label').text("Refresh on");
@@ -745,7 +756,14 @@ function show_msg(msg) {
 }
 
 $("#replay_btn").click(function () {
+    // load history info dataset
+    show_msg('load history dataset!')
+    load_history_into_array();
+
+    //close refresh
     refresh_off();
+
+    //start replay
     show_msg("Replay start!");
     for (var i = 0; i < waves_array.length; i++) {
         var wave_json = waves_array[i];
