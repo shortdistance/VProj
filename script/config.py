@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Project Name
-PROJECT_NAME = 'opendata-cw2'
+PROJECT_NAME = 'uk_coastal_monitoring'
 
 # Determine system whether start with debug mode
 DEBUG = True
@@ -23,10 +23,10 @@ ENABLE_MAIL_NOTICE = False
 SMTP_HOST = 'smtp.163.com'
 
 # default sender
-EMAIL_SENDER = 'zhanglei520vip@163.com'
+EMAIL_SENDER = 'xxxxxx'
 
 # the password of default sender
-SENDER_PASS = '1qaz2wsx'
+SENDER_PASS = 'xxxxxx'
 
 # email subject prefix
 MAIL_SUBJECT_PREFIX = '[' + PROJECT_NAME.capitalize() + ']'
@@ -37,12 +37,5 @@ MAX_FOUND_DISTANCE_BETWEEN_USERS = 2000
 # channel coast api key
 CHANNNEL_COAST_API_KEY = 'dfjn4ty1jdpm5qrgc6jwpdmk9gh7gf6u'
 
-CHANNNEL_COAST_API_KEY = 'dfjn4ty1jdpm5qrgc6jwpdmk9gh7gf6u'
-
-RABBITMQ_BIGWIG_URL = 'amqp://1G8enNXO:Nf_uWwcyHBs-jg3UhAkRskXZSLwh7ppq@sad-nelthilta-30.bigwig.lshift.net:11020/hOM1ppDgFf6w'
-
-REDIS_URL = 'redis://h:p550d645fdb271552914055f59b174ec1e33475a443ad4aff1be2ad41c935f2da@ec2-34-226-55-20.compute-1.amazonaws.com:28949'
-
-MONGODB_URI = 'mongodb://heroku_3gr09dlh:ohb0regig4p4bsphgktn25llge@ds113063.mlab.com:13063/heroku_3gr09dlh'
 
 SECONDS = 900
