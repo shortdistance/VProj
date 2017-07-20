@@ -59,21 +59,47 @@ var HISTORY_ARRAY_LENGTH = 1800;
 
 var waves_array = new Array();
 var tides_array = new Array();
-if (localStorage.waves) {
-    waves_array = JSON.parse(localStorage.waves);
-    console.log('Read data from wave localStorage');
-}
 
-if (localStorage.tides) {
-    tides_array = JSON.parse(localStorage.tides);
-    console.log('Read data from tide localStorage');
-}
+/*
+ if (localStorage.waves) {
+ waves_array = JSON.parse(localStorage.waves);
+ console.log('Read data from wave localStorage');
+ }
+
+ if (localStorage.tides) {
+ tides_array = JSON.parse(localStorage.tides);
+ console.log('Read data from tide localStorage');
+ }
+ */
+
 
 var bWaves = true;
 var bTides = true;
 
 var wave_markers = [];
 var tide_markers = [];
+
+function load_history_into_array(days, hours) {
+    var data = JSON.stringify({
+        days: days,
+        hours: hours
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: "/api/get_history_info",
+        data: data,
+        contentType: 'application/json;charset=UTF-8',
+        success: function (response, status) {
+            waves_array = response.waves_array;
+            tides_array = response.tides_array;
+            console.log('waves_array:' + waves_array.length + ',tides_array:' + tides_array.length);
+        },
+        error: function (response, status, error) {
+            alert('Error: ' + error + ". Status: " + status);
+        }
+    });
+}
 
 function initMap() {
     var pos = {
@@ -94,6 +120,7 @@ function initMap() {
 
     infoWindow = new google.maps.InfoWindow();
 
+    load_history_into_array(1, 0);
     fetch_dataset_and_create_markers(); //Before the timer work, refresh the page once.
     my_timer = setInterval(fetch_dataset_and_upgrade_markers, time_interval); //refresh the page by timer.
 
@@ -163,34 +190,38 @@ function fetch_dataset_and_create_markers() {
             var waves_json = JSON.parse(JSON.stringify(data.waves_json));
             var tides_json = JSON.parse(JSON.stringify(data.tides_json));
 
-            if (checkJsonInArray(waves_json, waves_array) == false) {
-                if (waves_array.length == HISTORY_ARRAY_LENGTH) {
-                    waves_array.shift();
-                }
-                waves_array.push(waves_json);
-            }
-
-            try {
-                localStorage.waves = JSON.stringify(waves_array);
-            }
-            catch (e) {
-                console.log(e); // pass exception object to error handler
-            }
+            /*
+             if (checkJsonInArray(waves_json, waves_array) == false) {
+             if (waves_array.length == HISTORY_ARRAY_LENGTH) {
+             waves_array.shift();
+             }
+             waves_array.push(waves_json);
+             }
 
 
-            if (checkJsonInArray(tides_json, tides_array) == false) {
-                if (tides_array.length == HISTORY_ARRAY_LENGTH) {
-                    tides_array.shift();
-                }
-                tides_array.push(tides_json);
-            }
+             try {
+             localStorage.waves = JSON.stringify(waves_array);
+             }
+             catch (e) {
+             console.log(e); // pass exception object to error handler
+             }
+             */
 
-            try {
-                localStorage.tides = JSON.stringify(tides_array);
-            }
-            catch (e) {
-                console.log(e); // pass exception object to error handler
-            }
+            /*
+             if (checkJsonInArray(tides_json, tides_array) == false) {
+             if (tides_array.length == HISTORY_ARRAY_LENGTH) {
+             tides_array.shift();
+             }
+             tides_array.push(tides_json);
+             }
+
+             try {
+             localStorage.tides = JSON.stringify(tides_array);
+             }
+             catch (e) {
+             console.log(e); // pass exception object to error handler
+             }
+             */
 
             console.log(waves_array.length.toString() + ',' + tides_array.length.toString());
 
@@ -819,27 +850,27 @@ $("#stop_replay_btn").click(function () {
     refresh_on();
 });
 
+/*
+ function replay_nodes_list() {
+ for (var i = 0; i < waves_array.length; i++) {
+ var div = document.createElement('div');
+ div.setAttribute("id", "div_" + i.toString());
+ document.getElementById("replay_list").appendChild(div);
+ var dateText = document.createTextNode(waves_array[i].featureMember[0].waves.date);
+ document.getElementById("div_" + i.toString()).appendChild(dateText);
+ document.getElementById("div_" + i.toString()).appendChild(renderjson(waves_array[i].featureMember));
 
-function replay_nodes_list() {
-    for (var i = 0; i < waves_array.length; i++) {
-        var div = document.createElement('div');
-        div.setAttribute("id", "div_" + i.toString());
-        document.getElementById("replay_list").appendChild(div);
-        var dateText = document.createTextNode(waves_array[i].featureMember[0].waves.date);
-        document.getElementById("div_" + i.toString()).appendChild(dateText);
-        document.getElementById("div_" + i.toString()).appendChild(renderjson(waves_array[i].featureMember));
-
-    }
-}
+ }
+ }
 
 
-function clear_replay_nodes_list() {
-    var results = document.getElementById("replay_list");
-    while (results.childNodes[0]) {
-        results.removeChild(results.childNodes[0]);
-    }
-}
-
+ function clear_replay_nodes_list() {
+ var results = document.getElementById("replay_list");
+ while (results.childNodes[0]) {
+ results.removeChild(results.childNodes[0]);
+ }
+ }
+ */
 
 function storageAvailable(type) {
     try {
